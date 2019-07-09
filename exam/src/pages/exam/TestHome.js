@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./TestHome.scss"
 import { connect } from 'dva';
-import { Menu, Icon, Button } from 'antd';
+import { Menu, Icon } from 'antd';
 
 const { SubMenu } = Menu;
 
@@ -16,7 +16,7 @@ function TestHome() {
                         defaultOpenKeys={['sub1']}
                         mode="inline"
                         theme="dark"
-                        // inlineCollapsed={this.state.collapsed}
+                    // inlineCollapsed={this.state.collapsed}
                     >
                         <SubMenu
                             key="sub1"
@@ -82,7 +82,7 @@ function TestHome() {
                     </Menu>
                 </div>
                 <div className={styles.testHome_bottom_right}>
-                    
+
                 </div>
             </div>
         </div>
