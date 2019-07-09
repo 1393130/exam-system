@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Route, Switch } from 'dva/router';
-import IndexPage from './pages/IndexPage';
 import LoginPage from './pages/login/loginPage';
 import TestHome  from './pages/exam/TestHome'
 import 'antd/dist/antd.css';
