@@ -6,7 +6,7 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 function LoginPage(props) {
   console.log(props)
   if (props.isLogin) {
-    props.history.push("/")
+    props.history.push("/home")
   }
   useEffect(() => {
     // props.login({ user_name: 'chenmanjie', user_pwd: 'Chenmanjie123!' });
