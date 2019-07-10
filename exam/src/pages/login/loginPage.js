@@ -7,7 +7,7 @@ function LoginPage(props) {
   useEffect(() => {
     if (props.isLogin === 1) {
       message.success('登陆成功');
-      let path = '/';
+      let path = '/home';
       if (props.location.search) {
         path = decodeURIComponent(props.location.search.split('=')[1]);
       }
