@@ -1,26 +1,66 @@
 import React from 'react';
 import styles from "./TestHome.scss"
 import { connect } from 'dva';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Dropdown } from 'antd';
 import { Link, Route } from 'dva/router'
+//试题管理
 import AddQuestion from './QuestionManagement/AddQuestions/AddQuestions'
 import ClassifyQuestion from './QuestionManagement/ClassifyQuestions/ClassifyQuestions'
 import CheckQuestion from './QuestionManagement/CheckQuestions/CheckQuestions'
+//用户管理
 import AddUser from './UserManagement/AddUsers/AddUsers'
 import UserDisplay from './UserManagement/UserDisplay/UserDisplay'
+//考试管理
 import AddExam from './ExamManagement/AddExam/AddExam'
 import ExamList from './ExamManagement/ExamLists/ExamLists'
+//班级管理
 import ClassMange from './ClassManagement/ClassManage/ClassManage'
 import ClassroomManage from './ClassManagement/ClassroomManage/ClassroomManage'
 import StudentManage from './ClassManagement/StudentManage/StudentManage'
+//阅卷管理
 import MarkManage from './MarkManagement/MarkManage'
 
 const { SubMenu } = Menu;
 
 function TestHome() {
+    //下拉
+    const menu = (
+        <Menu>
+            <Menu.Item key="0">
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+                    个人中心
+            </a>
+            </Menu.Item>
+            <Menu.Item key="1">
+                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                    我的班级
+            </a>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="2">
+                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                    设置
+            </a>
+            </Menu.Item>
+            <Menu.Item key="3">
+                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                    退出登录
+            </a>
+            </Menu.Item>
+        </Menu>
+    );
     return (
         <div className={styles.testHome}>
-            <div className={styles.testHome_top}></div>
+            <div className={styles.testHome_top}>
+                <div className={styles.logo}><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551624718911&di=4a7004f8d71bd8da84d4eadf1b59e689&imgtype=0&src=http%3A%2F%2Fimg105.job1001.com%2Fupload%2Falbum%2F2014-10-15%2F1413365052_95IE3msH.jpg" /></div>
+                <div className={styles.userinfo}>
+                    <Dropdown overlay={menu}>
+                        <a className="ant-dropdown-link" href="#">
+                            <em><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=829044612,3699393036&fm=27&gp=0.jpg" /></em><span>zhangxin</span>
+                        </a>
+                    </Dropdown>
+                </div>
+            </div>
             <div className={styles.testHome_bottom}>
                 <div className={styles.testHome_bottom_left}>
                     <Menu
@@ -34,7 +74,7 @@ function TestHome() {
                             key="sub1"
                             title={
                                 <span>
-                                    <Icon type="mail" />
+                                    <Icon type="sliders" />
                                     <span>试题管理</span>
                                 </span>
                             }
@@ -47,7 +87,7 @@ function TestHome() {
                             key="sub2"
                             title={
                                 <span>
-                                    <Icon type="mail" />
+                                    <Icon type="user" />
                                     <span>用户管理</span>
                                 </span>
                             }
@@ -71,7 +111,7 @@ function TestHome() {
                             key="sub4"
                             title={
                                 <span>
-                                    <Icon type="mail" />
+                                    <Icon type="team" />
                                     <span>班级管理</span>
                                 </span>
                             }
