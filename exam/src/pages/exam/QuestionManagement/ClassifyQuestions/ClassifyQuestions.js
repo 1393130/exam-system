@@ -4,11 +4,6 @@ import style from './ClassifyQuestions.css'
 
 import { Button, Modal, Form, Input, Radio , Table, Divider, Tag } from 'antd';
 function ClassifyQuestion(props) {
-  // state = {
-  //   ModalText: 'Content of the modal',
-  //   visible: false,
-  //   confirmLoading: false,
-  // };
   const { Column, ColumnGroup } = Table
   useEffect(() => {
      props.getClassify()
@@ -38,11 +33,7 @@ function ClassifyQuestion(props) {
       props.AddClassify({text:onValue,sort:list.length + 1})
     }, 2000);
   };
-  //创建类型的input输入框
-  // let onChange = e => {
-  //   console.log(e.target.value);
-  // };
-  //列表内容
+  //渲染列表内容
   const data = list
   return (
     <div className={style.question_box}>
@@ -85,11 +76,13 @@ let mapStateProps = (state) => {
 }
 let mapDispatchProps = (dispatch) => {
   return {
+      //试题分类里面的渲染数据
       getClassify() {
         dispatch({
           type:'getclassify/getclassify',
         })
       },
+      //试题分类里面的添加类型试题 paylaod 传过来的是 text  sort
       AddClassify(payload) {
         console.log(payload)
         dispatch({

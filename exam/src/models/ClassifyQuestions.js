@@ -11,9 +11,10 @@ export default {
     //   setup({ dispatch, history }) {  // eslint-disable-line
     //   },
     // },
-  
+    //异步
     effects: {
       *getclassify({ payload }, { call, put }) {  // eslint-disable-line
+        //获取到的数据
         let data = yield call(getClassify,payload)
         console.log(data)
         yield put({
@@ -22,7 +23,7 @@ export default {
         })
       },
     },
-  
+    //同步
     reducers: {
       upClassify(state, action) {
         return { ...state , list:action.payload}
