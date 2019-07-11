@@ -16,6 +16,9 @@
   justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 0px 10px !important;
   background: white !important;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .testHome_top .logo {
@@ -68,10 +71,12 @@
 }
 
 .testHome_bottom .testHome_bottom_left {
+  padding-top: 84px;
   width: 250px;
   height: 100%;
   border-right: 1px solid #eee;
   background: #000c17;
+  box-sizing: border-box;
 }
 
 .testHome_bottom .testHome_bottom_left ul li {
@@ -83,8 +88,9 @@
 }
 
 .testHome_bottom .testHome_bottom_right {
+  padding-top: 84px;
   flex: 1;
   height: 100%;
-  padding: 0 24px 24px;
   background: #f0f2f5;
+  box-sizing: border-box;
 }
