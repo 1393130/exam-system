@@ -1,104 +1,112 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import styles from './CheckQuestions.scss';
-import { Tag, Button, Select } from 'antd';
+import { Tag, Button, Select , Form } from 'antd';
 
 
-function CheckQuestion() {
+function CheckQuestion(props) {
   const { CheckableTag } = Tag;
-  const tagsFromServer = ['All', 'javaScript上', 'javaScript下', '模块化开发', '移动端开发', 'node基础', '组件化开发(vue)', '渐进式开发(react)', 'javaScript高级', 'node高级'];
   const [selectedTags, changeselectedTags] = useState([])
-
+  const [subjectID  , changeSubjectID] = useState('')
+  
   //判断全选
   useEffect(() => {
-    console.log(123)
-    let flag = tagsFromServer.slice(1).every(item => {
-      if (selectedTags.includes(item)) {
-        return true
-      }
-      return false
-    })
-    console.log(flag)
-    if (flag) {
-      changeselectedTags(tagsFromServer)
-    } else {
-      changeselectedTags(selectedTags)
-    }
-  }, [selectedTags])
-
-  //选择分类
+    props.getExamType()//获取考试类型
+    props.getTopicType()//获取题目类型
+    props.getSubject()//获取课程类型
+  }, [])
+  console.log(props)
+  // 选择分类
   let handleChange = (tag, checked) => {
     if (tag === "All") {
-      if (selectedTags.length !== tagsFromServer.length) {
-        changeselectedTags(tagsFromServer)
-      } else {
-        changeselectedTags([])
-      }
+
     } else {
-      const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-      changeselectedTags(nextSelectedTags)
+      let subID = props.subjectType.find(item => item.subject_text === tag.subject_text).subject_id
+      changeselectedTags([tag])
+      changeSubjectID(subID)
     }
 
   }
-
-  //考试类型
-  const optionsOne = [{ label: '周考1', value: '周考1' }, { label: '周考2', value: '周考2' }, { label: '周考3', value: '周考3' }, { label: '月考', value: '月考' }]
-  //考试类型发生变化
-  function onChangeOne(value) {
-    console.log(value);
-  }
-  //题目类型
-  const optionsTwo = [{ label: '简答题', value: '简答题' }, { label: '代码阅读题', value: '代码阅读题' }, { label: '代码补全', value: '代码补全' }, { label: '修改bug', value: '修改bug' }, { label: '手写代码', value: '手写代码' }]
-  //题目类型改变
-  function onChangeTwo(value) {
-    console.log(value);
-  }
-  //下拉框改变
-  function handleChangeSelect(value) {
-    console.log(`selected ${value}`);
-  }
+  //处理表单提交
+  let handleSubmit = () => {
+    props.form.validateFields((err, values) => {
+      if (!err) {
+        if(values.exam_id !== '') {
+          let examID = props.examType.find(item => item.exam_name === values.exam_id).exam_id;
+          console.log(examID)
+          values.exam_id = examID
+        }
+        console.log(values)
+        props.getCheckQuestion({
+            ...values,
+            subject_id:subjectID
+        })
+      }
+    });
+  };
+  //从form中校验
+  const { getFieldDecorator } = props.form;
+  
   const { Option } = Select;
+  //点击跳考试详情
+  let ToQuestionDetail = (item) => {
+      props.history.push({pathname:`/home/QuestionDetail/?id=${item.questions_id}`})
+  }
   return (
     <div className={styles.checkquest}>
       <h2>查看试题</h2>
       <section className={styles.checkquest_cont}>
+      <Form onSubmit={handleSubmit}>
         <div className={styles.classify_quest}>
           <div>
             <h6 style={{ marginRight: 8, display: 'inline' }}>课程类型:</h6>
-            {tagsFromServer.map(tag => (
+            <CheckableTag onChange={checked => handleChange('All', checked)}>All</CheckableTag>
+            { props.subjectType && props.subjectType.map(tag => (
               <CheckableTag
-                key={tag}
+                key={tag.subject_id}
                 checked={selectedTags.indexOf(tag) > -1}
                 onChange={checked => handleChange(tag, checked)}
               >
-                {tag}
+                {tag.subject_text}
               </CheckableTag>
             ))}
           </div>
           <div>
             <span>考试类型：
-              <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChangeSelect}>
-                {
-                  optionsOne.map((item, index) => {
-                    return <Option value={item.value} key={index}>{item.value}</Option>
-                  })
-                }
-              </Select>
+                <Form.Item>
+                  {getFieldDecorator('exam_id', {
+                    initialValue: ""
+                  })(
+                    <Select style={{ width: 200 }} >
+                      {
+                          props.examType && props.examType.map((item, index) => {
+                            return <Option value={item.exam_name} key={item.exam_id}>{item.exam_name}</Option>
+                          })
+                      }
+                    </Select>,
+                  )}
+                </Form.Item>
             </span>
             <span>题目类型：
-              <Select defaultValue="lucy" style={{ width: 120 }} >
-                {
-                  optionsTwo.map((item, index) => {
-                    return <Option value={item.value} key={index}>{item.value}</Option>
-                  })
-                }
-              </Select>
+              <Form.Item>
+                  {getFieldDecorator('questions_type_id', {
+                    initialValue: ""
+                  })(
+                    <Select style={{ width: 200 }}>
+                      {
+                          props.TopicType &&  props.TopicType.map((item, index) => {
+                            return <Option value={item.questions_type_id} key={item.questions_type_id}>{item.questions_type_text}</Option>
+                          })
+                      }
+                    </Select>,
+                  )}
+              </Form.Item>
             </span>
-            <span><Button
+            <span>
+              <Button
               type="primary"
               icon="search"
-            // loading={this.state.iconLoading}
-            // onClick={this.enterIconLoading}
+              htmlType="submit"
             >
               查询
             </Button>
@@ -106,61 +114,34 @@ function CheckQuestion() {
           </div>
         </div>
         <div className={styles.cont_quest}>
-          <div className={styles.list_item}>
-                <div className={styles.item_left}>
-                  <a href="#">
-                    <h4>机器人归位</h4>
-                    <div className={styles.item_style}>
-                      <div className="ant-tag ant-tag-blue">代码补全</div>
-                      <div className="ant-tag ant-tag-geekblue">javaScript上</div>
-                      <div className="ant-tag ant-tag-orange">周考1</div>
-                    </div>
-                    <span>dingshaoshan 发布</span>
-                  </a>
+           {
+            props.filterQuestion ? 
+            (
+              props.filterQuestion.length === 0 ? <div>没有数据</div> :
+              props.filterQuestion.map(item => (
+                <div className={styles.list_item} key={item.questions_id}>
+                      <div className={styles.item_left} onClick={() => {ToQuestionDetail(item)}}>
+                        <div className={styles.item_left_cont}>
+                          <h4>{item.title}</h4>
+                          <div className={styles.item_style}>
+                            <div className="ant-tag ant-tag-blue">{item.questions_type_text}</div>
+                            <div className="ant-tag ant-tag-geekblue">{item.subject_text}</div>
+                            <div className="ant-tag ant-tag-orange">{item.exam_name}</div>
+                          </div>
+                          <span>{item.user_name}发布</span>
+                        </div>
+                      </div>
+                      <ul className={styles.item_right}>
+                        <li>
+                          <a href="#">编辑</a>
+                        </li>
+                      </ul>
                 </div>
-                <ul className={styles.item_right}>
-                  <li>
-                    <a href="#">编辑</a>
-                  </li>
-                </ul>
-          </div>
-          <div className={styles.list_item}>
-                <div className={styles.item_left}>
-                  <a href="#">
-                    <h4>机器人归位</h4>
-                    <div className={styles.item_style}>
-                      <div className="ant-tag ant-tag-blue">代码补全</div>
-                      <div className="ant-tag ant-tag-geekblue">javaScript上</div>
-                      <div className="ant-tag ant-tag-orange">周考1</div>
-                    </div>
-                    <span>dingshaoshan 发布</span>
-                  </a>
-                </div>
-                <ul className={styles.item_right}>
-                  <li>
-                    <a href="#">编辑</a>
-                  </li>
-                </ul>
-          </div>
-          <div className={styles.list_item}>
-                <div className={styles.item_left}>
-                  <a href="#">
-                    <h4>机器人归位</h4>
-                    <div className={styles.item_style}>
-                      <div className="ant-tag ant-tag-blue">代码补全</div>
-                      <div className="ant-tag ant-tag-geekblue">javaScript上</div>
-                      <div className="ant-tag ant-tag-orange">周考1</div>
-                    </div>
-                    <span>dingshaoshan 发布</span>
-                  </a>
-                </div>
-                <ul className={styles.item_right}>
-                  <li>
-                    <a href="#">编辑</a>
-                  </li>
-                </ul>
-          </div>
+               ))
+            ) : <div>没有数据</div> 
+           }
         </div>
+        </Form>
       </section>
     </div>
   );
@@ -168,5 +149,41 @@ function CheckQuestion() {
 
 CheckQuestion.propTypes = {
 };
-
-export default connect()(CheckQuestion);
+let mapStateProps = (state) => {
+  return { 
+    ...state, ...state.getExamType,
+    ...state.getTopicType ,
+    ...state.getSubject,
+    ...state.getCheckQuestion
+  }
+}
+let mapDispatchProps = (dispatch) => {
+  return {
+    //获取考试类型
+    getExamType: () => {
+      dispatch({
+        type: "getExamType/getExamType"
+      })
+    },
+    //获取题目类型
+    getTopicType: () => {
+      dispatch({
+        type: "getTopicType/getTopicType"
+      })
+    },
+     //获取课程类型
+     getSubject: () => {
+      dispatch({
+        type: "getSubject/getSubject"
+      })
+    },
+    //查询数据
+    getCheckQuestion:(payload) => {
+       dispatch({
+         type:'getCheckQuestion/getCheckQuestion',
+         payload
+       })
+    }
+  }
+}
+export default connect(mapStateProps,mapDispatchProps)(Form.create()(CheckQuestion));
