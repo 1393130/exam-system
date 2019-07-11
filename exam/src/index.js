@@ -8,7 +8,11 @@ const app = dva();
 // app.use({});
 
 // 3. Model
-app.model(require('./models/login').default);
+app.model(require('./models/login').default);   //登录
+app.model(require('./models/getExamType').default);//获取考试类型
+app.model(require('./models/getSubject').default);//获取课程类型
+app.model(require('./models/getTopicType').default);//获取题目类型
+
 
 // 4. Router
 app.router(require('./router').default);

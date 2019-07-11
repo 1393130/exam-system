@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import Editor from 'for-editor'
 import styles from './AddQuestions.scss'
 import { Input, Select, Button } from 'antd';
 
-function AddQuestion() {
-  const optionsOne = [{ label: '周考1', value: '周考1' }, { label: '周考2', value: '周考2' }, { label: '周考3', value: '周考3' }, { label: '月考', value: '月考' }]
-  const optionsTwo = [{ label: '简答题', value: '简答题' }, { label: '代码阅读题', value: '代码阅读题' }, { label: '代码补全', value: '代码补全' }, { label: '修改bug', value: '修改bug' }, { label: '手写代码', value: '手写代码' }]
-
+function AddQuestion(props) {
+  console.log(props)
+  useEffect(() => {
+    props.getExamType()//获取考试类型
+    props.getSubject()//获取课程类型
+    props.getTopicType()//获取题目类型
+  }, [])
+  //题干内容
+  const [questions_stem,change_questions_stem]=useState('')
+  let stemIpt=(e)=>{
+    change_questions_stem(e.target.value)
+  }
+  //考试类型
+  // const [questions_stem,change_questions_stem]=useState('')
+  let testTypeId=(key)=>{
+    console.log(key)
+  }
   const { Option } = Select;
   return (
     <div className={styles.addquestion}>
@@ -16,7 +29,7 @@ function AddQuestion() {
         <h4>题目信息</h4>
         <div className={styles.question_stem}>
           <h4>题干</h4>
-          <Input placeholder="请输入题目标题，不超过20个字" />
+          <Input placeholder="请输入题目标题，不超过20个字" onChange={e=>stemIpt(e)}/>
         </div>
         <div className={styles.topic_theme}>
           <h4>题目主题</h4>
@@ -24,10 +37,10 @@ function AddQuestion() {
         </div>
         <div className={styles.test_type}>
           <h4>请选择考试类型：</h4>
-          <Select defaultValue="周考1" style={{ width: 200 }}>
+          <Select defaultValue="请选择考试类型" style={{ width: 200 }} onChange={testTypeId}>
             {
-              optionsOne.map((item, index) => {
-                return <Option value={item.value} key={index}>{item.value}</Option>
+              props.examType && props.examType.map((item, index) => {
+                return <Option value={item.exam_name} key={item.exam_id}>{item.exam_name}</Option>
               })
             }
           </Select>
@@ -36,8 +49,8 @@ function AddQuestion() {
           <h4>请选择课程类型：</h4>
           <Select defaultValue="javaScript上" style={{ width: 200 }}>
             {
-              optionsTwo.map((item, index) => {
-                return <Option value={item.value} key={index}>{item.value}</Option>
+              props.subjectType && props.subjectType.map((item, index) => {
+                return <Option value={item.subject_text} key={item.subject_id}>{item.subject_text}</Option>
               })
             }
           </Select>
@@ -46,8 +59,8 @@ function AddQuestion() {
           <h4>请选择题目类型：</h4>
           <Select defaultValue="简答题" style={{ width: 200 }}>
             {
-              optionsTwo.map((item, index) => {
-                return <Option value={item.value} key={index}>{item.value}</Option>
+              props.TopicType && props.TopicType.map((item, index) => {
+                return <Option value={item.questions_type_id} key={item.questions_type_id}>{item.questions_type_text}</Option>
               })
             }
           </Select>
@@ -67,4 +80,29 @@ function AddQuestion() {
 AddQuestion.propTypes = {
 };
 
-export default connect()(AddQuestion);
+const mapToProps = state => {
+  return { ...state, ...state.getExamType, ...state.getSubject, ...state.getTopicType }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //获取考试类型
+    getExamType: () => {
+      dispatch({
+        type: "getExamType/getExamType"
+      })
+    },
+    //获取课程类型
+    getSubject: () => {
+      dispatch({
+        type: "getSubject/getSubject"
+      })
+    },
+    //获取题目类型
+    getTopicType: () => {
+      dispatch({
+        type: "getTopicType/getTopicType"
+      })
+    }
+  }
+}
+export default connect(mapToProps, mapDispatchToProps)(AddQuestion);
