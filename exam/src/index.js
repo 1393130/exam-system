@@ -9,10 +9,10 @@ const app = dva();
 
 // 3. Model
 app.model(require('./models/login').default);
-
+//获取试题分类的数据
 app.model(require('./models/ClassifyQuestions').default);
-
-
+//添加试题分类的数据
+app.model(require('./models/Addclassify').default)
 // 4. Router
 app.router(require('./router').default);
 

@@ -19,6 +19,8 @@ function ClassifyQuestion(props) {
   //改变的弹框的显示隐藏
   const [visible,changeVisible]= useState(false);
   const [confirmLoading,changeConfir]= useState(false);
+  //设置默认onchange的值
+  const [onValue , onChangeValue] = useState('')
   //点击添加类型的按钮
   let showModal = () => {
     changeVisible(true);
@@ -32,14 +34,14 @@ function ClassifyQuestion(props) {
     changeConfir(true)
     setTimeout(() => {
       changeConfir(true);
-      changeVisible(true);
-      console.log(props)
+      changeVisible(false);
+      props.AddClassify({text:onValue,sort:list.length + 1})
     }, 2000);
   };
   //创建类型的input输入框
-  let onChange = e => {
-    console.log(e.target.value);
-  };
+  // let onChange = e => {
+  //   console.log(e.target.value);
+  // };
   //列表内容
   const data = list
   return (
@@ -60,7 +62,7 @@ function ClassifyQuestion(props) {
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
               >
-                <p><Input placeholder="input with clear icon" allowClear onChange={onChange} /></p>
+                <p><Input placeholder="input with clear icon" value={onValue} allowClear onChange={(e) => {onChangeValue(e.target.value)}} /></p>
               </Modal>
             </div>
             </div>
@@ -89,6 +91,7 @@ let mapDispatchProps = (dispatch) => {
         })
       },
       AddClassify(payload) {
+        console.log(payload)
         dispatch({
           type:'AddClassify/AddClassify',
           payload

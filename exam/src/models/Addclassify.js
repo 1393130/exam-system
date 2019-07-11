@@ -4,7 +4,7 @@ export default {
     namespace: 'AddClassify',
   
     state: {
-        list:[]
+        
     },
   
     // subscriptions: {
@@ -25,7 +25,7 @@ export default {
   
     reducers: {
       upClassify(state, action) {
-        return { ...state , list:action.payload}
+        return { ...state , ...action.payload}
       }
     },
   
