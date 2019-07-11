@@ -2,88 +2,42 @@ import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import style from './ClassifyQuestions.css'
 
-import { Button, Modal, Form, Input, Radio , Table, Divider, Tag} from 'antd';
+import { Button, Modal, Form, Input, Radio , Table, Divider, Tag } from 'antd';
 function ClassifyQuestion(props) {
-  const { onCancel, onCreate } = props;
-  console.log(props)
-  const { getFieldDecorator } = props.form;
-  const CollectionCreateForm = Form.create({ name: 'form_in_modal' })
+  // state = {
+  //   ModalText: 'Content of the modal',
+  //   visible: false,
+  //   confirmLoading: false,
+  // };
+  const { Column, ColumnGroup } = Table
   useEffect(() => {
      props.getClassify()
   },[])
-
+  let {list} = props.getclassify
   const [visible,changeVisible]= useState(false);
+  const [confirmLoading,changeConfir]= useState(false);
+  //点击添加类型的按钮
   let showModal = () => {
     changeVisible(true);
   };
+  //点击弹框的取消按钮
   let handleCancel = () => {
-    changeVisible(true);
+    changeVisible(false);
   };
-  let formRef ;
-  let handleCreate = () => {
-    const { form } = formRef.props;
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      console.log('Received values of form: ', values);
-      form.resetFields();
-      changeVisible(false);
-    });
+  //点击弹框的确定按钮
+  let handleOk = () => {
+    changeConfir(true)
+    setTimeout(() => {
+      changeConfir(true);
+      changeVisible(true);
+    }, 2000);
   };
-
-  let saveFormRef = (formRef) => {
-      formRef = formRef;
+  //创建类型的input输入框
+  const onChange = e => {
+    console.log(e);
   };
-  //列表
-  const columns = [
-    {
-      title: '类型ID',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a href="javascript:;">{text}</a>,
-    },
-    {
-      title: '类型名称',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: '操作',
-      key: 'action',
-      render: (text, record) => (
-        <span>
-          <a href="javascript:;">Invite {record.name}</a>
-          <Divider type="vertical" />
-          <a href="javascript:;">Delete</a>
-        </span>
-      ),
-    },
-  ];
   //列表内容
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+  const data = list
   return (
     <div className={style.question_box}>
         <header className={style.question_header}>
@@ -95,44 +49,23 @@ function ClassifyQuestion(props) {
               <Button type="primary" onClick={showModal}>
                 + 添加类型
               </Button>
-              <CollectionCreateForm
-                wrappedComponentRef={saveFormRef}
+              <Modal
+                title="创建新类型"
                 visible={visible}
+                onOk={handleOk}
+                confirmLoading={confirmLoading}
                 onCancel={handleCancel}
-                onCreate={handleCreate}
-              />
+              >
+                <p><Input placeholder="input with clear icon" allowClear onChange={onChange} /></p>
+              </Modal>
             </div>
-            <Modal
-              visible={visible}
-              title="Create a new collection"
-              okText="Create"
-              onCancel={onCancel}
-              onOk={onCreate}
-            >
-                <Form layout="vertical">
-                  <Form.Item label="Title">
-                    {getFieldDecorator('title', {
-                      rules: [{ required: true, message: 'Please input the title of collection!' }],
-                    })(<Input />)}
-                  </Form.Item>
-                  <Form.Item label="Description">
-                    {getFieldDecorator('description')(<Input type="textarea" />)}
-                  </Form.Item>
-                  <Form.Item className="collection-create-form_last-form-item">
-                    {getFieldDecorator('modifier', {
-                      initialValue: 'public',
-                    })(
-                      <Radio.Group>
-                        <Radio value="public">Public</Radio>
-                        <Radio value="private">Private</Radio>
-                      </Radio.Group>,
-                    )}
-                  </Form.Item>
-                </Form>
-            </Modal>
             </div>
             <div className={style.question_main_list}>
-                <Table columns={columns} dataSource={data} />
+            <Table dataSource={data}>
+              <Column title="类型ID" dataIndex='questions_type_id' key="questions_type_id" />
+              <Column title="类型名称" dataIndex="questions_type_text" key="questions_type_text" />
+              <Column title="操作" dataIndex="address" key="address" />
+            </Table> 
             </div>
         </section>
     </div>  
