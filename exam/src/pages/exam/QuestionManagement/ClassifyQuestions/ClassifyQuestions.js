@@ -13,7 +13,10 @@ function ClassifyQuestion(props) {
   useEffect(() => {
      props.getClassify()
   },[])
+
+  //获取的数据
   let {list} = props.getclassify
+  //改变的弹框的显示隐藏
   const [visible,changeVisible]= useState(false);
   const [confirmLoading,changeConfir]= useState(false);
   //点击添加类型的按钮
@@ -30,11 +33,12 @@ function ClassifyQuestion(props) {
     setTimeout(() => {
       changeConfir(true);
       changeVisible(true);
+      console.log(props)
     }, 2000);
   };
   //创建类型的input输入框
-  const onChange = e => {
-    console.log(e);
+  let onChange = e => {
+    console.log(e.target.value);
   };
   //列表内容
   const data = list
@@ -82,6 +86,12 @@ let mapDispatchProps = (dispatch) => {
       getClassify() {
         dispatch({
           type:'getclassify/getclassify',
+        })
+      },
+      AddClassify(payload) {
+        dispatch({
+          type:'AddClassify/AddClassify',
+          payload
         })
       }
   }
