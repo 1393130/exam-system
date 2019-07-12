@@ -49,6 +49,10 @@ function CheckQuestion(props) {
   let ToQuestionDetail = (item) => {
     props.history.push({ pathname: `/home/QuestionDetail/?id=${item.questions_id}` })
   }
+  //点击跳转编辑页
+  let CompileDetail = () => {
+    props.history.push({})
+  }
   return (
     <div className={styles.checkquest}>
       <h2>查看试题</h2>
@@ -130,16 +134,16 @@ function CheckQuestion(props) {
                             <span>{item.user_name}发布</span>
                           </div>
                         </div>
-                        <ul className={styles.item_right}>
-                          <li>
-                            <a href="#">编辑</a>
-                          </li>
-                        </ul>
-                      </div>
-                    ))
-                ) : <div>没有数据</div>
-            }
-          </div>
+                      <ul className={styles.item_right}>
+                        <li>
+                          <span onClick={() => {CompileDetail()}}>编辑</span>
+                        </li>
+                      </ul>
+                </div>
+               ))
+            ) : <div>没有数据</div> 
+           }
+        </div>
         </Form>
       </section>
     </div>
