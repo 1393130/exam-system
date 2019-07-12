@@ -147,7 +147,7 @@ function TestHome() {
                     <Route path="/home/classroommanage" component={ClassroomManage}></Route>
                     <Route path="/home/studentmanage" component={StudentManage}></Route>
                     <Route path="/home/markmanage" component={MarkManage}></Route>
-                    <Route path="/home/QuestionDetail" component={QuestionDetail}></Route>
+                    <Route path="/home/QuestionDetail/:id" component={QuestionDetail}></Route>
                     
                 </div>
             </div>

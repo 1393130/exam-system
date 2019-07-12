@@ -15,7 +15,6 @@ function CheckQuestion(props) {
     props.getTopicType()//获取题目类型
     props.getSubject()//获取课程类型
   }, [])
-  console.log(props)
   // 选择分类
   let handleChange = (tag, checked) => {
     if (tag === "All") {
@@ -51,6 +50,10 @@ function CheckQuestion(props) {
   //点击跳考试详情
   let ToQuestionDetail = (item) => {
       props.history.push({pathname:`/home/QuestionDetail/?id=${item.questions_id}`})
+  }
+  //点击跳转编辑页
+  let CompileDetail = () => {
+    props.history.push({})
   }
   return (
     <div className={styles.checkquest}>
@@ -133,7 +136,7 @@ function CheckQuestion(props) {
                       </div>
                       <ul className={styles.item_right}>
                         <li>
-                          <a href="#">编辑</a>
+                          <span onClick={() => {CompileDetail()}}>编辑</span>
                         </li>
                       </ul>
                 </div>
