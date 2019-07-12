@@ -55,6 +55,7 @@ function CheckQuestion(props) {
   const { Option } = Select;
   //点击跳考试详情
   let ToQuestionDetail = (item) => {
+    console.log(item.questions_id)
     props.history.push({ pathname: `/home/QuestionDetail/?id=${item.questions_id}` })
   }
   //点击跳转编辑页

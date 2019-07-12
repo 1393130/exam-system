@@ -3,10 +3,13 @@ import { connect } from 'dva';
 import { Tag, Button, Select , Form } from 'antd';
 import styles from './QuestionDetail.scss'
 function QuestionDetail(props) {
+    // console.log(props.match.params.id.slice(1).split('=')[1])
     let id = props.match.params.id.slice(1).split('=')[1]
     useEffect(() => {
-        props.getCheckQuestion({'questions_id':id})//获取试题信息
-    },[])
+        if(id) {
+          props.getCheckQuestion({'questions_id':id})//获取试题信息
+        }
+    },[id])
     let {title,user_name,questions_type_text,subject_text,exam_name ,questions_stem , questions_answer}= props.filterQuestion[0]
   return (
     <div className={styles.Detail_wrap}>

@@ -155,7 +155,7 @@ function editDetail(props) {
             onOk={handleOk}
             onCancel={handleCancel}
           >
-            <h2>确认添加吗？</h2>
+            <h2>确认要修改吗？</h2>
           </Modal>
         </Form>
 
