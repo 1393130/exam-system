@@ -34,10 +34,20 @@ function CheckQuestion(props) {
           let examID = props.examType.find(item => item.exam_name === values.exam_id).exam_id;
           values.exam_id = examID
         }
-        props.getCheckQuestion({
+        // console.log({
+        //   ...values,
+        //   subject_id: subjectID
+        // })
+        let obj= {
           ...values,
           subject_id: subjectID
-        })
+        }
+        for(let i  in obj){
+          if(obj[i]===""){
+            delete obj[i]
+          }
+        }
+        props.getCheckQuestion(obj)
       }
     });
   };

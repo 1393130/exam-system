@@ -13,7 +13,7 @@ export default {
     effects: {
         *getCheckQuestion({ payload }, { call, put }) {  // eslint-disable-line
             let data = yield call(getCheckQuestion,payload)
-            // console.log(data)
+            console.log(data)
             if (data.code === 0) {
                 return
             }
