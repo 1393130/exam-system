@@ -8,16 +8,14 @@ function editDetail(props) {
   if (props.editQuest == 1) {
     message.success('修改成功')
   }
-  console.log(props)
-  let id = props.match.params.id.slice(1).split('=')[1]
-  let { title, user_name, questions_type_text, subject_text, exam_name, questions_stem, questions_answer } = props.filterQuestion[0]
   useEffect(() => {
     props.getExamType()//获取考试类型
     props.getSubject()//获取课程类型
     props.getTopicType()//获取题目类型
     props.getUserInfo()//获取用户信息
-    props.getCheckQuestion({ 'questions_id': id })//获取试题信息
+    props.getCheckQuestion({ 'questions_id': props.match.params.id.slice(1).split('=')[1] })//获取试题信息
   }, [])
+  let { title, user_name, questions_type_text, subject_text, exam_name, questions_stem, questions_answer } = props.filterQuestion[0]
   //控制弹框
   const [visible, change_visible] = useState(false);
   let showModal = () => {
@@ -45,9 +43,8 @@ function editDetail(props) {
         values.exam_id = examID;
         values.subject_id = subjectID;
         values.user_id = props.userInfo.user_id;
-        values.questions_id=id;
+        values.questions_id = props.match.params.id.slice(1).split('=')[1];
         let obj = Object.values(values);
-        console.log(obj);
         if (obj.includes(undefined)) {
           message.error('参数不完整')
         } else {
@@ -57,9 +54,10 @@ function editDetail(props) {
     });
   };
   const { Option } = Select;
+
   return (
-    <div className={styles.addquestion}>
-      <h2>编辑试题</h2>
+    props.filterQuestion.length > 0 ? <div className={styles.addquestion}>
+      <h2>编辑试题</h2>{props.filterQuestion[0].title}
       <section className={styles.addquestion_cont}>
         <Form onSubmit={handleSubmit}>
           <h4>题目信息</h4>
@@ -67,7 +65,7 @@ function editDetail(props) {
             <h4>题干</h4>
             <Form.Item>
               {getFieldDecorator('title', {
-                initialValue:title
+                initialValue: props.filterQuestion[0].title
               })(
                 <Input
                   placeholder="请输入题目标题，不超过20个字"
@@ -79,7 +77,7 @@ function editDetail(props) {
             <h4>题目主题</h4>
             <Form.Item>
               {getFieldDecorator('questions_stem', {
-                initialValue:questions_stem
+                initialValue: props.filterQuestion[0].questions_stem
               })(
                 <Editor style={{ height: 330 }}></Editor>,
               )}
@@ -89,7 +87,7 @@ function editDetail(props) {
             <h4>请选择考试类型：</h4>
             <Form.Item>
               {getFieldDecorator('exam_id', {
-                initialValue: exam_name
+                initialValue: props.filterQuestion[0].exam_name
               })(
                 <Select style={{ width: 200 }}>
                   {
@@ -105,7 +103,7 @@ function editDetail(props) {
             <h4>请选择课程类型：</h4>
             <Form.Item>
               {getFieldDecorator('subject_id', {
-                initialValue: subject_text
+                initialValue: props.filterQuestion[0].subject_text
               })(
                 <Select style={{ width: 200 }}>
                   {
@@ -121,7 +119,7 @@ function editDetail(props) {
             <h4>请选择题目类型：</h4>
             <Form.Item>
               {getFieldDecorator('questions_type_id', {
-                initialValue: questions_type_text
+                initialValue: props.filterQuestion[0].questions_type_text
               })(
                 <Select style={{ width: 200 }}>
                   {
@@ -137,15 +135,12 @@ function editDetail(props) {
             <h4>答案信息</h4>
             <Form.Item>
               {getFieldDecorator('questions_answer', {
-                initialValue: questions_answer
+                initialValue: props.filterQuestion[0].questions_answer
               })(
                 <Editor style={{ height: 330 }}></Editor>,
               )}
             </Form.Item>
           </div>
-          {/* <Button type="primary" size="large" htmlType="submit">
-            提交
-        </Button> */}
           <Button type="primary" onClick={showModal} type="primary" size="large">
             提示
         </Button>
@@ -160,7 +155,7 @@ function editDetail(props) {
         </Form>
 
       </section>
-    </div>
+    </div> : <div>数据正在请求</div>
   );
 }
 
@@ -168,7 +163,7 @@ editDetail.propTypes = {
 };
 
 const mapToProps = state => {
-  return { ...state, ...state.getExamType, ...state.getSubject, ...state.getTopicType, ...state.getUserInfo, ...state.getCheckQuestion,...state.editQuestion }
+  return { ...state, ...state.getExamType, ...state.getSubject, ...state.getTopicType, ...state.getUserInfo, ...state.getCheckQuestion, ...state.editQuestion }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -198,12 +193,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     //查询数据
     getCheckQuestion: (payload) => {
+      console.log(payload, "........")
       dispatch({
         type: 'getCheckQuestion/getCheckQuestion',
         payload
       })
     },
-    editQuestion:(payload)=>{
+    editQuestion: (payload) => {
       dispatch({
         type: 'editQuestion/editQuestion',
         payload
