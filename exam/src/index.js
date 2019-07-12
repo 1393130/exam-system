@@ -1,11 +1,16 @@
 import dva from 'dva';
 import './index.css';
-
+import { message } from 'antd';
+import createLoading from 'dva-loading';
 // 1. Initialize
-const app = dva();
-
+const app = dva(createLoading());
 // 2. Plugins
-// app.use({});
+app.use({
+    // onAction: createLogger(),
+    onError: (e) => {
+        message.error(e.message, /* duration */3);
+    }
+});
 
 // 3. Models
 //获取试题分类的数据
@@ -20,6 +25,8 @@ app.model(require('./models/getUserInfo').default);//获取用户信息
 app.model(require('./models/addQuestion').default);//添加试题
 app.model(require('./models/getCheckQuestion').default);//筛选数据
 app.model(require('./models/editQuestion').default);//修改试题数据
+
+
 
 
 // 4. Router

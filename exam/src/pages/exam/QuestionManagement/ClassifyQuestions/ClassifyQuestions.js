@@ -2,8 +2,9 @@ import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import style from './ClassifyQuestions.scss'
 
-import { Button, Modal, Form, Input, Radio , Table, Divider, Tag } from 'antd';
+import { Button, Modal, Form, Input, Radio , Table, Divider, Tag , Spin} from 'antd';
 function ClassifyQuestion(props) {
+  console.log(props)
   const { Column, ColumnGroup } = Table
   useEffect(() => {
      props.getClassify()
@@ -37,6 +38,7 @@ function ClassifyQuestion(props) {
   const data = list
   return (
     <div className={style.question_box}>
+      {props.global?<div className={style.loading}><Spin/></div>: null}
         <header className={style.question_header}>
             <h2>试题分类</h2>
         </header>
@@ -72,7 +74,10 @@ function ClassifyQuestion(props) {
 ClassifyQuestion.propTypes = {
 };
 let mapStateProps = (state) => {
-  return {...state,...state.ClassifyQuestions}
+  return {...state,
+    ...state.ClassifyQuestions,
+    global: state.loading.global
+  }
 }
 let mapDispatchProps = (dispatch) => {
   return {
