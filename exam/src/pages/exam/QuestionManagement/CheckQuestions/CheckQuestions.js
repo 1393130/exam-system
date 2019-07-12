@@ -8,12 +8,13 @@ function CheckQuestion(props) {
   const { CheckableTag } = Tag;
   const [selectedTags, changeselectedTags] = useState([])
   const [subjectID  , changeSubjectID] = useState('')
-  
+  console.log(props)
   //判断全选
   useEffect(() => {
     props.getExamType()//获取考试类型
     props.getTopicType()//获取题目类型
     props.getSubject()//获取课程类型
+    props.AllCheckQuestion()//获取所有试题
   }, [])
   // 选择分类
   let handleChange = (tag, checked) => {
@@ -26,6 +27,7 @@ function CheckQuestion(props) {
     }
 
   }
+  
   //处理表单提交
   let handleSubmit = () => {
     props.form.validateFields((err, values) => {
@@ -54,6 +56,10 @@ function CheckQuestion(props) {
   //点击跳转编辑页
   let CompileDetail = () => {
     props.history.push({})
+  }
+  let arr = props.AllQuestions
+  if(props.filterQuestion) {
+    arr = props.filterQuestion
   }
   return (
     <div className={styles.checkquest}>
@@ -118,10 +124,10 @@ function CheckQuestion(props) {
         </div>
         <div className={styles.cont_quest}>
            {
-            props.filterQuestion ? 
+            arr ? 
             (
-              props.filterQuestion.length === 0 ? <div>没有数据</div> :
-              props.filterQuestion.map(item => (
+              arr.length === 0 ? <div>没有数据</div> :
+              arr.map(item => (
                 <div className={styles.list_item} key={item.questions_id}>
                       <div className={styles.item_left} onClick={() => {ToQuestionDetail(item)}}>
                         <div className={styles.item_left_cont}>
@@ -157,7 +163,8 @@ let mapStateProps = (state) => {
     ...state, ...state.getExamType,
     ...state.getTopicType ,
     ...state.getSubject,
-    ...state.getCheckQuestion
+    ...state.getCheckQuestion,
+    ...state.AllCheckQuestion
   }
 }
 let mapDispatchProps = (dispatch) => {
@@ -186,7 +193,13 @@ let mapDispatchProps = (dispatch) => {
          type:'getCheckQuestion/getCheckQuestion',
          payload
        })
-    }
+    },
+    //获取所有试题
+    AllCheckQuestion:() => {
+      dispatch({
+        type:'AllCheckQuestion/AllCheckQuestion'
+      })
+   }
   }
 }
 export default connect(mapStateProps,mapDispatchProps)(Form.create()(CheckQuestion));

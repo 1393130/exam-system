@@ -17,10 +17,12 @@ export default {
         //获取到的数据
         let data = yield call(getClassify,payload)
         console.log(data)
-        yield put({
-          type:"upClassify",
-          payload:data.data
-        })
+        if(data.code === 1) {
+          yield put({
+            type:"upClassify",
+            payload:data.data
+          })
+        }
       },
     },
     //同步

@@ -19,6 +19,7 @@ app.model(require('./models/getTopicType').default);//获取题目类型
 app.model(require('./models/getUserInfo').default);//获取用户信息
 app.model(require('./models/addQuestion').default);//添加试题
 app.model(require('./models/getCheckQuestion').default);//筛选数据
+app.model(require('./models/AllCheckQuestion').default);//获取所有试题
 
 
 // 4. Router
