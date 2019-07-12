@@ -14,6 +14,7 @@ function CheckQuestion(props) {
     props.getExamType()//获取考试类型
     props.getTopicType()//获取题目类型
     props.getSubject()//获取课程类型
+    props.AllCheckQuestion()//获取所有试题
   }, [])
   // 选择分类
   let handleChange = (tag, checked) => {
@@ -26,6 +27,7 @@ function CheckQuestion(props) {
     }
 
   }
+
   //处理表单提交
   let handleSubmit = () => {
     props.form.validateFields((err, values) => {
@@ -34,12 +36,12 @@ function CheckQuestion(props) {
           let examID = props.examType.find(item => item.exam_name === values.exam_id).exam_id;
           values.exam_id = examID
         }
-        let obj= {
+        let obj = {
           ...values,
           subject_id: subjectID
         }
-        for(let i  in obj){
-          if(obj[i]===""){
+        for (let i in obj) {
+          if (obj[i] === "") {
             delete obj[i]
           }
         }
@@ -57,7 +59,12 @@ function CheckQuestion(props) {
   }
   //点击跳转编辑页
   let CompileDetail = (item) => {
+    console.log(item)
     props.history.push({ pathname: `/home/editDetail/?id=${item.questions_id}` })
+  }
+  let arr = props.AllQuestions
+  if (props.filterQuestion) {
+    arr = props.filterQuestion
   }
   return (
     <div className={styles.checkquest}>
@@ -124,10 +131,10 @@ function CheckQuestion(props) {
           </div>
           <div className={styles.cont_quest}>
             {
-              props.filterQuestion ?
+              arr ?
                 (
-                  props.filterQuestion.length === 0 ? <div>没有数据</div> :
-                    props.filterQuestion.map(item => (
+                  arr.length === 0 ? <div>没有数据</div> :
+                    arr.map(item => (
                       <div className={styles.list_item} key={item.questions_id}>
                         <div className={styles.item_left} onClick={() => { ToQuestionDetail(item) }}>
                           <div className={styles.item_left_cont}>
@@ -140,16 +147,16 @@ function CheckQuestion(props) {
                             <span>{item.user_name}发布</span>
                           </div>
                         </div>
-                      <ul className={styles.item_right}>
-                        <li onClick={()=>{CompileDetail(item)}}>
-                          <span>编辑</span>
-                        </li>
-                      </ul>
-                </div>
-               ))
-            ) : <div>没有数据</div> 
-           }
-        </div>
+                        <ul className={styles.item_right}>
+                          <li onClick={() => { CompileDetail(item) }}>
+                            <span>编辑</span>
+                          </li>
+                        </ul>
+                      </div>
+                    ))
+                ) : <div>没有数据</div>
+            }
+          </div>
         </Form>
       </section>
     </div>
@@ -163,7 +170,8 @@ let mapStateProps = (state) => {
     ...state, ...state.getExamType,
     ...state.getTopicType,
     ...state.getSubject,
-    ...state.getCheckQuestion
+    ...state.getCheckQuestion,
+    ...state.AllCheckQuestion
   }
 }
 let mapDispatchProps = (dispatch) => {
@@ -191,6 +199,12 @@ let mapDispatchProps = (dispatch) => {
       dispatch({
         type: 'getCheckQuestion/getCheckQuestion',
         payload
+      })
+    },
+    //获取所有试题
+    AllCheckQuestion: () => {
+      dispatch({
+        type: 'AllCheckQuestion/AllCheckQuestion'
       })
     }
   }

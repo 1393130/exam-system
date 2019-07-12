@@ -2,7 +2,7 @@ import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import style from './ClassifyQuestions.scss'
 
-import { Button, Modal, Form, Input, Radio , Table, Divider, Tag , Spin} from 'antd';
+import { Button, Modal, Form, Input, Radio , Table, Divider, Tag , Spin, message} from 'antd';
 function ClassifyQuestion(props) {
   console.log(props)
   const { Column, ColumnGroup } = Table
@@ -27,15 +27,20 @@ function ClassifyQuestion(props) {
   };
   //点击弹框的确定按钮
   let handleOk = () => {
-    changeConfir(true)
-    setTimeout(() => {
-      changeConfir(true);
-      changeVisible(false);
-      props.AddClassify({text:onValue,sort:list.length + 1})
-    }, 2000);
+    props.form.validateFields((err, values) => {
+      console.log('err...', err);
+      if (!err) {
+        console.log('Received values of form: ', values);
+        props.AddClassify({text:values.onValue,sort:list.length + 1})
+        handleCancel()
+      }else{
+        message.error(err.types.errors[0].message);
+      }
+    });
   };
   //渲染列表内容
   const data = list
+  const { getFieldDecorator } = props.form;
   return (
     <div className={style.question_box}>
       {props.global?<div className={style.loading}><Spin/></div>: null}
@@ -45,18 +50,36 @@ function ClassifyQuestion(props) {
         <section className={style.question_main}>
             <div className={style.question_main_Add}>
             <div>
-              <Button type="primary" onClick={showModal}>
+            <Button type="primary" onClick={showModal}>
                 + 添加类型
-              </Button>
-              <Modal
+            </Button>
+            <Modal
+                visible={visible}
+                title="添加考试类型"
+                onCancel={()=>handleCancel(false)}
+                onOk={()=>handleOk()}
+                >
+                <Form onSubmit={handleOk}>
+                  <Form.Item>
+                    {getFieldDecorator('onValue', {
+                      rules: [{ required: true, message: '请输入试题类型!' }],
+                    })(
+                      <Input
+                        placeholder="请输入类型名称"
+                      />,
+                    )}
+                  </Form.Item>
+                </Form>
+              </Modal>
+              {/* <Modal
                 title="创建新类型"
                 visible={visible}
                 onOk={handleOk}
-                confirmLoading={confirmLoading}
                 onCancel={handleCancel}
+                confirmLoading={confirmLoading}
               >
-                <p><Input placeholder="input with clear icon" value={onValue} allowClear onChange={(e) => {onChangeValue(e.target.value)}} /></p>
-              </Modal>
+              <p><Input placeholder="添加考试" value={onValue}  onChange={(e) => {onChangeValue(e.target.value)}} /></p>               
+              </Modal> */}
             </div>
             </div>
             <div className={style.question_main_list}>
