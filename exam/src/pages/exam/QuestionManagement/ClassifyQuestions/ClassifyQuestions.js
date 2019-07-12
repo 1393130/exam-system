@@ -36,13 +36,6 @@ function ClassifyQuestion(props) {
         message.error(err.types.errors[0].message);
       }
     });
-    // // changeConfir(true)
-    //   if(onValue === '') {
-    //       message.error('请输入要添加的试题')
-    //   }
-    //   changeConfir(true);
-    //   // changeVisible(false);
-    //   props.AddClassify({text:onValue,sort:list.length + 1})
   };
   //渲染列表内容
   const data = list
