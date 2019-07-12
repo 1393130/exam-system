@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import Editor from 'for-editor'
-import styles from './AddQuestions.scss'
-import { Form, Input, Select, Button, Modal,message } from 'antd';
+import styles from './editDetail.scss'
+import { Form, Input, Select, Button, Modal, message } from 'antd';
 
-function AddQuestion(props) {
-  if(props.addInfo==1){
-    message.success('添加成功')
+function editDetail(props) {
+  if (props.editQuest == 1) {
+    message.success('修改成功')
   }
   console.log(props)
+  let id = props.match.params.id.slice(1).split('=')[1]
+  let { title, user_name, questions_type_text, subject_text, exam_name, questions_stem, questions_answer } = props.filterQuestion[0]
   useEffect(() => {
     props.getExamType()//获取考试类型
     props.getSubject()//获取课程类型
     props.getTopicType()//获取题目类型
     props.getUserInfo()//获取用户信息
+    props.getCheckQuestion({ 'questions_id': id })//获取试题信息
   }, [])
   //控制弹框
   const [visible, change_visible] = useState(false);
@@ -36,18 +39,19 @@ function AddQuestion(props) {
       if (!err) {
         let examID = props.examType.find(item => item.exam_name === values.exam_id).exam_id;
         let subjectID = props.subjectType.find(item => item.subject_text === values.subject_id).subject_id;
-        if(values.questions_type_id==="简答题"){
-          values.questions_type_id="774318-730z8m"
+        if (values.questions_type_id === "简答题") {
+          values.questions_type_id = "774318-730z8m"
         }
         values.exam_id = examID;
         values.subject_id = subjectID;
         values.user_id = props.userInfo.user_id;
-        let obj=Object.values(values);
+        values.questions_id=id;
+        let obj = Object.values(values);
         console.log(obj);
-        if(obj.includes(undefined)){
+        if (obj.includes(undefined)) {
           message.error('参数不完整')
-        }else{
-          props.addQuestion(values)
+        } else {
+          props.editQuestion(values)
         }
       }
     });
@@ -55,7 +59,7 @@ function AddQuestion(props) {
   const { Option } = Select;
   return (
     <div className={styles.addquestion}>
-      <h2>添加试题</h2>
+      <h2>编辑试题</h2>
       <section className={styles.addquestion_cont}>
         <Form onSubmit={handleSubmit}>
           <h4>题目信息</h4>
@@ -63,6 +67,7 @@ function AddQuestion(props) {
             <h4>题干</h4>
             <Form.Item>
               {getFieldDecorator('title', {
+                initialValue:title
               })(
                 <Input
                   placeholder="请输入题目标题，不超过20个字"
@@ -74,6 +79,7 @@ function AddQuestion(props) {
             <h4>题目主题</h4>
             <Form.Item>
               {getFieldDecorator('questions_stem', {
+                initialValue:questions_stem
               })(
                 <Editor style={{ height: 330 }}></Editor>,
               )}
@@ -83,7 +89,7 @@ function AddQuestion(props) {
             <h4>请选择考试类型：</h4>
             <Form.Item>
               {getFieldDecorator('exam_id', {
-                initialValue: "周考1"
+                initialValue: exam_name
               })(
                 <Select style={{ width: 200 }}>
                   {
@@ -99,7 +105,7 @@ function AddQuestion(props) {
             <h4>请选择课程类型：</h4>
             <Form.Item>
               {getFieldDecorator('subject_id', {
-                initialValue: "javaScript上"
+                initialValue: subject_text
               })(
                 <Select style={{ width: 200 }}>
                   {
@@ -115,7 +121,7 @@ function AddQuestion(props) {
             <h4>请选择题目类型：</h4>
             <Form.Item>
               {getFieldDecorator('questions_type_id', {
-                initialValue: "简答题"
+                initialValue: questions_type_text
               })(
                 <Select style={{ width: 200 }}>
                   {
@@ -131,6 +137,7 @@ function AddQuestion(props) {
             <h4>答案信息</h4>
             <Form.Item>
               {getFieldDecorator('questions_answer', {
+                initialValue: questions_answer
               })(
                 <Editor style={{ height: 330 }}></Editor>,
               )}
@@ -145,8 +152,8 @@ function AddQuestion(props) {
           <Modal
             title="添加试题"
             visible={visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
+            onOk={handleOk}
+            onCancel={handleCancel}
           >
             <h2>确认添加吗？</h2>
           </Modal>
@@ -157,11 +164,11 @@ function AddQuestion(props) {
   );
 }
 
-AddQuestion.propTypes = {
+editDetail.propTypes = {
 };
 
 const mapToProps = state => {
-  return { ...state, ...state.getExamType, ...state.getSubject, ...state.getTopicType, ...state.getUserInfo,...state.addQuestion }
+  return { ...state, ...state.getExamType, ...state.getSubject, ...state.getTopicType, ...state.getUserInfo, ...state.getCheckQuestion,...state.editQuestion }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -189,12 +196,19 @@ const mapDispatchToProps = (dispatch) => {
         type: "getUserInfo/getUserInfo"
       })
     },
-    addQuestion:payload=>{
+    //查询数据
+    getCheckQuestion: (payload) => {
       dispatch({
-        type: "addQuestion/addQuestion",
+        type: 'getCheckQuestion/getCheckQuestion',
+        payload
+      })
+    },
+    editQuestion:(payload)=>{
+      dispatch({
+        type: 'editQuestion/editQuestion',
         payload
       })
     }
   }
 }
-export default connect(mapToProps, mapDispatchToProps)(Form.create()(AddQuestion));
+export default connect(mapToProps, mapDispatchToProps)(Form.create()(editDetail));

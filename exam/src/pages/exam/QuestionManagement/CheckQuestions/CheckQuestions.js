@@ -50,8 +50,8 @@ function CheckQuestion(props) {
     props.history.push({ pathname: `/home/QuestionDetail/?id=${item.questions_id}` })
   }
   //点击跳转编辑页
-  let CompileDetail = () => {
-    props.history.push({})
+  let CompileDetail = (item) => {
+    props.history.push({ pathname: `/home/editDetail/?id=${item.questions_id}` })
   }
   return (
     <div className={styles.checkquest}>
@@ -135,8 +135,8 @@ function CheckQuestion(props) {
                           </div>
                         </div>
                       <ul className={styles.item_right}>
-                        <li>
-                          <span onClick={() => {CompileDetail()}}>编辑</span>
+                        <li onClick={()=>{CompileDetail(item)}}>
+                          <span>编辑</span>
                         </li>
                       </ul>
                 </div>

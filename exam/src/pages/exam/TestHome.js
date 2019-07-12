@@ -21,6 +21,9 @@ import StudentManage from './ClassManagement/StudentManage/StudentManage'
 import MarkManage from './MarkManagement/MarkManage'
 //查看试题详情
 import QuestionDetail from './detail/QuestionDetail'
+//编辑详情
+import editDetail from './detail/editDetail'
+
 
 const { SubMenu } = Menu;
 
@@ -148,6 +151,7 @@ function TestHome() {
                     <Route path="/home/studentmanage" component={StudentManage}></Route>
                     <Route path="/home/markmanage" component={MarkManage}></Route>
                     <Route path="/home/QuestionDetail/:id" component={QuestionDetail}></Route>
+                    <Route path="/home/editDetail/:id" component={editDetail}></Route>
                     
                 </div>
             </div>

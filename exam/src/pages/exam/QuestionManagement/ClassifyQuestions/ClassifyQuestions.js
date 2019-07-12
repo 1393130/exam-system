@@ -1,6 +1,6 @@
 import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
-import style from './ClassifyQuestions.css'
+import style from './ClassifyQuestions.scss'
 
 import { Button, Modal, Form, Input, Radio , Table, Divider, Tag } from 'antd';
 function ClassifyQuestion(props) {
@@ -59,8 +59,8 @@ function ClassifyQuestion(props) {
             </div>
             <div className={style.question_main_list}>
             <Table dataSource={data}>
-              <Column title="类型ID" dataIndex='questions_type_id' key="questions_type_id" />
-              <Column title="类型名称" dataIndex="questions_type_text" key="questions_type_text" />
+              <Column title="类型ID" dataIndex='questions_type_id' rowKey="questions_type_id" />
+              <Column title="类型名称" dataIndex="questions_type_text" rowKey="questions_type_text" />
               <Column title="操作" dataIndex="address" key="address" />
             </Table> 
             </div>
