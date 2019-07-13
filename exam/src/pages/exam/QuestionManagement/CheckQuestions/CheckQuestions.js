@@ -20,7 +20,7 @@ function CheckQuestion(props) {
   // 选择分类
   let handleChange = (tag, checked) => {
     if (tag === "All") {
-
+      props.AllCheckQuestion()//获取所有试题
     } else {
       let subID = props.subjectType.find(item => item.subject_text === tag.subject_text).subject_id
       changeselectedTags([tag])

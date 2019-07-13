@@ -57,7 +57,7 @@ function editDetail(props) {
 
   return (
     props.filterQuestion.length > 0 ? <div className={styles.addquestion}>
-      <h2>编辑试题</h2>{props.filterQuestion[0].title}
+      <h2>编辑试题</h2>
       <section className={styles.addquestion_cont}>
         <Form onSubmit={handleSubmit}>
           <h4>题目信息</h4>

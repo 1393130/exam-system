@@ -6,8 +6,6 @@ function QuestionDetail(props) {
     useEffect(() => {
         props.getCheckQuestion({'questions_id':props.match.params.id.slice(1).split('=')[1]})//获取试题信息
     },[])
-    console.log(props)
-    // let {title,user_name,questions_type_text,subject_text,exam_name ,questions_stem , questions_answer}= props.filterQuestion[0]
   return (
     props.filterQuestion.length>0?<div className={styles.Detail_wrap}>
          <h2>查看试题</h2>
