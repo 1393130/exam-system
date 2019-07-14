@@ -145,7 +145,7 @@ function editDetail(props) {
             提示
         </Button>
           <Modal
-            title="添加试题"
+            title="编辑"
             visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}
@@ -153,7 +153,6 @@ function editDetail(props) {
             <h2>确认添加吗？</h2>
           </Modal>
         </Form>
-
       </section>
     </div> : <div>数据正在请求</div>
   );
