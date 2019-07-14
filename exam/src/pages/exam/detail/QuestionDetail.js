@@ -3,33 +3,30 @@ import { connect } from 'dva';
 import { Tag, Button, Select , Form } from 'antd';
 import styles from './QuestionDetail.scss'
 function QuestionDetail(props) {
-    // console.log(props.match.params.id.slice(1).split('=')[1])
-    let id = props.match.params.id.slice(1).split('=')[1]
     useEffect(() => {
-        if(id) {
-          props.getCheckQuestion({'questions_id':id})//获取试题信息
-        }
-    },[id])
-    let {title,user_name,questions_type_text,subject_text,exam_name ,questions_stem , questions_answer}= props.filterQuestion[0]
+        props.getCheckQuestion({'questions_id':props.match.params.id.slice(1).split('=')[1]})//获取试题信息
+    },[])
+    console.log(props)
+    // let {title,user_name,questions_type_text,subject_text,exam_name ,questions_stem , questions_answer}= props.filterQuestion[0]
   return (
-    <div className={styles.Detail_wrap}>
+    props.filterQuestion.length>0?<div className={styles.Detail_wrap}>
          <h2>查看试题</h2>
         <div className={styles.Detail_box}>
             <div className={styles.Detail_left}>
-                <h3 className={styles.Detail_setter}>出题人: {user_name}</h3>
+                <h3 className={styles.Detail_setter}>出题人: {props.filterQuestion[0].user_name}</h3>
                 <div className={styles.item_left_cont}>
                     <h4>题目信息</h4>
                     <div className={styles.item_style}>
-                        <div className="ant-tag ant-tag-blue">{questions_type_text}</div>
-                        <div className="ant-tag ant-tag-geekblue">{subject_text}</div>
-                        <div className="ant-tag ant-tag-orange">{exam_name}</div>
+                        <div className="ant-tag ant-tag-blue">{props.filterQuestion[0].questions_type_text}</div>
+                        <div className="ant-tag ant-tag-geekblue">{props.filterQuestion[0].subject_text}</div>
+                        <div className="ant-tag ant-tag-orange">{props.filterQuestion[0].exam_name}</div>
                     </div>
                 </div>
                 <div className={styles.Detail_cont}>
-                    <h2>{title}</h2>
+                    <h2>{props.filterQuestion[0].title}</h2>
                     <pre>
                         <code>
-                            {questions_stem}
+                            {props.filterQuestion[0].questions_stem}
                         </code>
                     </pre>
                 </div>
@@ -37,12 +34,12 @@ function QuestionDetail(props) {
             <div className={styles.Detail_right}>
                 <pre>
                     <code>
-                        {questions_answer}
+                        {props.filterQuestion[0].questions_answer}
                     </code>
                 </pre>
             </div>
         </div>
-    </div>
+    </div>:<div>数据正在请求</div>
   );
 }
 

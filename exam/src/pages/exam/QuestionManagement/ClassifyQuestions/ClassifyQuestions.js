@@ -83,7 +83,7 @@ function ClassifyQuestion(props) {
             </div>
             </div>
             <div className={style.question_main_list}>
-            <Table dataSource={data}>
+            <Table dataSource={data} rowKey="questions_type_id">
               <Column title="类型ID" dataIndex='questions_type_id' rowKey="questions_type_id" />
               <Column title="类型名称" dataIndex="questions_type_text" rowKey="questions_type_text" />
               <Column title="操作" dataIndex="address" key="address" />

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import styles from './CheckQuestions.scss';
 import { Tag, Button, Select, Form } from 'antd';
+import List from "./list"
 
 
 function CheckQuestion(props) {
   const { CheckableTag } = Tag;
   const [selectedTags, changeselectedTags] = useState([])
   const [subjectID, changeSubjectID] = useState('')
-
+  console.log(props);
   //判断全选
   useEffect(() => {
     props.getExamType()//获取考试类型
@@ -19,7 +20,7 @@ function CheckQuestion(props) {
   // 选择分类
   let handleChange = (tag, checked) => {
     if (tag === "All") {
-
+      props.AllCheckQuestion()//获取所有试题
     } else {
       let subID = props.subjectType.find(item => item.subject_text === tag.subject_text).subject_id
       changeselectedTags([tag])
@@ -53,20 +54,6 @@ function CheckQuestion(props) {
   const { getFieldDecorator } = props.form;
 
   const { Option } = Select;
-  //点击跳考试详情
-  let ToQuestionDetail = (item) => {
-    console.log(item.questions_id)
-    props.history.push({ pathname: `/home/QuestionDetail/?id=${item.questions_id}` })
-  }
-  //点击跳转编辑页
-  let CompileDetail = (item) => {
-    console.log(item)
-    props.history.push({ pathname: `/home/editDetail/?id=${item.questions_id}` })
-  }
-  let arr = props.AllQuestions
-  if (props.filterQuestion) {
-    arr = props.filterQuestion
-  }
   return (
     <div className={styles.checkquest}>
       <h2>查看试题</h2>
@@ -132,30 +119,7 @@ function CheckQuestion(props) {
           </div>
           <div className={styles.cont_quest}>
             {
-              arr ?
-                (
-                  arr.length === 0 ? <div>没有数据</div> :
-                    arr.map(item => (
-                      <div className={styles.list_item} key={item.questions_id}>
-                        <div className={styles.item_left} onClick={() => { ToQuestionDetail(item) }}>
-                          <div className={styles.item_left_cont}>
-                            <h4>{item.title}</h4>
-                            <div className={styles.item_style}>
-                              <div className="ant-tag ant-tag-blue">{item.questions_type_text}</div>
-                              <div className="ant-tag ant-tag-geekblue">{item.subject_text}</div>
-                              <div className="ant-tag ant-tag-orange">{item.exam_name}</div>
-                            </div>
-                            <span>{item.user_name}发布</span>
-                          </div>
-                        </div>
-                        <ul className={styles.item_right}>
-                          <li onClick={() => { CompileDetail(item) }}>
-                            <span>编辑</span>
-                          </li>
-                        </ul>
-                      </div>
-                    ))
-                ) : <div>没有数据</div>
+              props.arr&&props.arr.map((item,index)=>(<List listItem={item} key={index} {...props}></List>))
             }
           </div>
         </Form>
@@ -171,7 +135,6 @@ let mapStateProps = (state) => {
     ...state, ...state.getExamType,
     ...state.getTopicType,
     ...state.getSubject,
-    ...state.getCheckQuestion,
     ...state.AllCheckQuestion
   }
 }
@@ -198,7 +161,7 @@ let mapDispatchProps = (dispatch) => {
     //查询数据
     getCheckQuestion: (payload) => {
       dispatch({
-        type: 'getCheckQuestion/getCheckQuestion',
+        type: 'AllCheckQuestion/getCheckQuestion',
         payload
       })
     },

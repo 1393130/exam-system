@@ -3,7 +3,10 @@ export default {
 
     namespace: 'getCheckQuestion',
 
-    state: {},
+    state: {
+        filterQuestion:[],
+        
+    },
 
     subscriptions: {
         setup({ dispatch, history }) {  // eslint-disable-line
@@ -12,6 +15,7 @@ export default {
 
     effects: {
         *getCheckQuestion({ payload }, { call, put }) {  // eslint-disable-line
+            console.log(payload)
             let data = yield call(getCheckQuestion,payload)
             console.log(data)
             if (data.code === 0) {
