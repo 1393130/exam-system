@@ -57,7 +57,7 @@ function editDetail(props) {
 
   return (
     props.filterQuestion.length > 0 ? <div className={styles.addquestion}>
-      <h2>编辑试题</h2>{props.filterQuestion[0].title}
+      <h2>编辑试题</h2>
       <section className={styles.addquestion_cont}>
         <Form onSubmit={handleSubmit}>
           <h4>题目信息</h4>
@@ -145,7 +145,7 @@ function editDetail(props) {
             提示
         </Button>
           <Modal
-            title="添加试题"
+            title="编辑"
             visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}
@@ -153,7 +153,6 @@ function editDetail(props) {
             <h2>确认要修改吗？</h2>
           </Modal>
         </Form>
-
       </section>
     </div> : <div>数据正在请求</div>
   );

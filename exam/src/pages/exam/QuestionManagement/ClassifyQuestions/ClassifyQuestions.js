@@ -71,22 +71,13 @@ function ClassifyQuestion(props) {
                   </Form.Item>
                 </Form>
               </Modal>
-              {/* <Modal
-                title="创建新类型"
-                visible={visible}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                confirmLoading={confirmLoading}
-              >
-              <p><Input placeholder="添加考试" value={onValue}  onChange={(e) => {onChangeValue(e.target.value)}} /></p>               
-              </Modal> */}
             </div>
             </div>
             <div className={style.question_main_list}>
             <Table dataSource={data} rowKey="questions_type_id">
               <Column title="类型ID" dataIndex='questions_type_id' rowKey="questions_type_id" />
-              <Column title="类型名称" dataIndex="questions_type_text" rowKey="questions_type_text" />
-              <Column title="操作" dataIndex="address" key="address" />
+              <Column title="类型名称" dataIndex="questions_type_text" rowKey="questions_type_id" />
+              <Column title="操作" dataIndex="address" rowKey="questions_type_id" />
             </Table> 
             </div>
         </section>
