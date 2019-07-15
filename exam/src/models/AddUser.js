@@ -1,4 +1,4 @@
-import { AddUsers , AddRankID} from "../services/AddUser"
+import { AddUsers , AddRankID , UpUser} from "../services/AddUser"
 export default {
 
     namespace: 'AddUser',
@@ -28,6 +28,15 @@ export default {
                 payload: data.data
             });
         },
+        //选择身份id
+        *UpdateUser({ payload }, { call, put }) {
+            let data = yield call(UpUser,payload)
+            console.log(data)
+            // yield put({
+            //     type: 'ChangeUser',
+            //     payload: data.data
+            // });
+        },
     },
 
     reducers: {
@@ -36,6 +45,10 @@ export default {
         },
         //选择身份id
         upSelectRank(state,action) {
+            return {...state,rankid:action.payload}
+        },
+        //更新用户
+        ChangeUser(state,action) {
             return {...state,rankid:action.payload}
         }
     },

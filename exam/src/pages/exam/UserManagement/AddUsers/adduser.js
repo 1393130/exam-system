@@ -11,11 +11,9 @@ function AddUser(props) {
       console.log(key);
     }
     //点击切换换内容
-    let [flag , changeBtn] = useState(0)
-    let handleBtnChange = () => {
-        if(flag === 0) {
-            changeBtn(1)
-        } 
+    let [flag , changeBtn] = useState('user')
+    let handleBtnChange = (e) => {
+        changeBtn(e.target.value)
     }
      //处理表单提交
     let handleSubmit = () => {
@@ -42,7 +40,7 @@ function AddUser(props) {
         <div className={styles.AddUser_user_form}>
             <Form className="login-form" onSubmit={handleSubmit}>
                 <div>
-                   { flag === 1 ? <Form.Item>
+                   { flag === 'update' ? <Form.Item>
                         {getFieldDecorator('questions_type_id', {
                             initialValue: "请选择身份ID"
                         })(
@@ -133,6 +131,13 @@ let mapDispatchProps = (dispatch) => {
         SelectRankId() {
             dispatch({
                 type:'AddUser/SelectRankId',
+            })
+        },
+         //更新用户
+         UpdateUser(payload) {
+            dispatch({
+                type:'AddUser/UpdateUser',
+                payload
             })
         }
     }

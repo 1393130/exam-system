@@ -8,3 +8,7 @@ export function AddUsers(params) {
 export function AddRankID() {
     return request.get('/user/identity')
 }
+//跟新用户信息
+export function UpUser() {
+    return request.put('/user/user')
+}
