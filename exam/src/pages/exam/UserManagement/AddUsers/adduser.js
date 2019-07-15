@@ -1,8 +1,9 @@
 import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import styles from './AddUsers.scss'
-import { Form, Icon, Input, Button, Checkbox, message , Select , Radio} from 'antd';
+import { Form, Icon, Input, Button, message , Select , Radio} from 'antd';
 function AddUser(props) {
+    console.log(props.rankid)
     //表单验证
     const {getFieldDecorator} = props.form;
     //切换
@@ -12,12 +13,23 @@ function AddUser(props) {
     //点击切换换内容
     let [flag , changeBtn] = useState(0)
     let handleBtnChange = () => {
-        if(flag === 1) {
-            changeBtn(0)
-        } else if(flag === 0) {
+        if(flag === 0) {
             changeBtn(1)
-        }
+        } 
     }
+     //处理表单提交
+    let handleSubmit = () => {
+        props.form.validateFields((err, values) => {
+        if (!err) {
+            console.log(values)
+            props.AddUser({user_name:values.username,user_pwd:values.password})
+        }
+        });
+    };
+    useEffect(() => {
+       props.SelectRankId()
+    },[])
+    const { Option } = Select
     return (
         <div className={styles.AddUser_user_page}>
         <div className={styles.AddUser_user_title}>
@@ -28,16 +40,18 @@ function AddUser(props) {
         </div>
         <div className={styles.AddUser_user_input}>
         <div className={styles.AddUser_user_form}>
-            <Form className="login-form">
+            <Form className="login-form" onSubmit={handleSubmit}>
                 <div>
                    { flag === 1 ? <Form.Item>
                         {getFieldDecorator('questions_type_id', {
                             initialValue: "请选择身份ID"
                         })(
                             <Select style={{ width: 200 }}>
-                            {
-                                
-                            }
+                                {
+                                    props.rankid.length > 0 ? props.rankid.map((item, index) => {
+                                        return <Option value={item.identity_id} key={item.identity_id} >{item.identity_text}</Option>
+                                    }) : null
+                                }
                             </Select>,
                         )}
                     </Form.Item> : null}
@@ -75,15 +89,17 @@ function AddUser(props) {
                             initialValue: "请选择身份ID"
                         })(
                             <Select style={{ width: 200 }}>
-                            {
-                                
-                            }
+                                {
+                                    props.rankid.length > 0 ? props.rankid.map((item, index) => {
+                                        return <Option value={item.identity_id} key={item.identity_id} >{item.identity_text}</Option>
+                                    }) : null
+                                }
                             </Select>,
                         )}
                     </Form.Item>
                 </div>
                 <div className={styles.AddUser_user_Btn}>
-                    <Button style={{ width : 120 ,marginRight: 20}} type="button" className='ant-btn ant-btn-primary AddUser-btn'>
+                    <Button style={{ width : 120 ,marginRight: 20}} htmlType="submit" type="button" className='ant-btn ant-btn-primary AddUser-btn'>
                         确定
                     </Button>
                     <Button>重置</Button>
@@ -97,5 +113,28 @@ function AddUser(props) {
 
 AddUser.propTypes = {
 };
-
-export default Form.create()(AddUser);
+let mapStateProps = (state) => {
+    return {
+        ...state,
+        ...state.AddUser,
+        ...state.SelectRankId
+    }
+}
+let mapDispatchProps = (dispatch) => {
+    return {
+        //添加用户
+        AddUser(payload) {
+            dispatch({
+                type:'AddUser/AddUser',
+                payload
+            })
+        },
+        //选择身份id
+        SelectRankId() {
+            dispatch({
+                type:'AddUser/SelectRankId',
+            })
+        }
+    }
+}
+export default connect(mapStateProps,mapDispatchProps)(Form.create()(AddUser));

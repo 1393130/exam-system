@@ -9,11 +9,10 @@ import AddAttempt from './addAttempt'
 import RankSetApi from './RankSetApi'
 import RankSetView from './RankSetView'
 function AddUser(props) {
-    console.log(props)
     return (
         <div className={styles.AddUser_wrap}>
            <div className={styles.AddUser_title}>
-               <h3>添加用户</h3>
+               <h2>添加用户</h2>
            </div>
            <div className={styles.AddUser_cont}>
                <div className={styles.AddUser_user}>
