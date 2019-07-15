@@ -16,6 +16,10 @@ function addApiJurisdiction(props) {
             }
         });
     };
+    //重置
+    let handleReset = () => {
+        props.form.resetFields();
+    };
     return (
         <div className={styles.AddUser_user_page}>
         <div className={styles.AddUser_user_title}>
@@ -70,7 +74,7 @@ function addApiJurisdiction(props) {
                     <Button style={{ width : 120 ,marginRight: 20}} htmlType="submit" type="button" className='ant-btn ant-btn-primary AddUser-btn'>
                         确定
                     </Button>
-                    <Button>重置</Button>
+                    <Button onClick={handleReset}>重置</Button>
                 </div>  
             </Form>
         </div>
