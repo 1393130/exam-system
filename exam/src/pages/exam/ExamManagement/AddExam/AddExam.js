@@ -8,23 +8,28 @@ function AddExam(props) {
     let handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-          if (!err) {
-            console.log('Received values of form: ', values);
-          }
+            if (!err) {
+                console.log('Received values of form: ', values);
+            }
         });
-      };
+    };
     return (
         <div className={styles.AddExam}>
             <h2>添加考试</h2>
             <div className={styles.addexam_cont}>
                 <Form onSubmit={handleSubmit} className="login-form">
-                    {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
-                    })(
-                        <Input
-                            placeholder="Username"
-                        />,
-                    )}
+                    <Form.Item>
+                        {getFieldDecorator('username', {
+                            rules: [{ required: true, message: 'Please input your username!' }],
+                        })(
+                            <Input
+                                placeholder="Username"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Log in
+                    </Button>
                 </Form>
             </div>
         </div>
@@ -34,4 +39,4 @@ function AddExam(props) {
 AddExam.propTypes = {
 };
 
-export default connect()(AddExam);
+export default connect()(Form.create()(AddExam));
