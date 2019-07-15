@@ -11,3 +11,4 @@ export * from './addQuestion'//添加试题
 export * from './getCheckQuestion' //筛选数据
 export * from './editQuestion'//修改试题
 export * from './userDisplay'//用户展示
+export * from './AddUser'//添加用户
