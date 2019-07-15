@@ -11,11 +11,11 @@
     background: #f0f2f5;
     .AddUser_title {
         width: 100%;
-        h2{
-            padding: 20px 0;
-            margin-top: 10px;
+        h2 {
             font-size: 25px;
-            color: rgba(0,0,0,0.85);
+            padding:20px 0 ;
+            margin-top:10px;
+            color:rgba(0,0,0,.85);
         }
     }
     .AddUser_cont {
@@ -27,16 +27,16 @@
         .AddUser_user {
             width: 100%;
             display: flex;
-            flex-shrink: 0;
             flex-wrap: wrap;
-            .AddUser_user_title {
+            // .AddUser_user_title {
                
-            }
+            // }
             .AddUser_user_page {
                 width: 33.3%;
                 border: 1px solid #ccc;
-                padding: 10px 10px 0px 10px;
+                padding: 15px;
                 box-sizing: border-box;
+                flex-shrink: 0;
                 // .ant-radio-group .ant-radio-group-outline .ant-radio-button-wrapper {
                 //     border: 1px solid blue;
                 // }
@@ -44,9 +44,9 @@
             .AddUser_user_input {
                 width: 100%;
                 margin-top: 20px;
-                .AddUser_user_form {
+                // .AddUser_user_form {
                     
-                }
+                // }
             }
         }
     }

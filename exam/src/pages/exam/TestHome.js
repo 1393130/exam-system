@@ -152,7 +152,6 @@ function TestHome() {
                     <Route path="/home/markmanage" component={MarkManage}></Route>
                     <Route path="/home/QuestionDetail/:id" component={QuestionDetail}></Route>
                     <Route path="/home/editDetail/:id" component={editDetail}></Route>
-                    
                 </div>
             </div>
         </div>
