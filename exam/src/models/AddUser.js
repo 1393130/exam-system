@@ -1,12 +1,14 @@
-import { AddUsers, AddRankID, UpUser, getView_authority, getApi_authority, setIdentityApi, setIdentityView,addAuthorityApi } from "../services/AddUser"
+import { AddUsers , AddRankID , UpUser ,getView_authority,getApi_authority , AddRank ,  setIdentityApi, setIdentityView,addAuthorityApi } from "../services/AddUser"
 export default {
 
     namespace: 'AddUser',
 
     state: {
-        rankid: [],//选择身份id
-        View_authority: [],//视图权限信息
-        Api_authority: [],//api接口权限数据
+        rankid:[],//选择身份id
+        View_authority:[],//视图权限信息
+        Api_authority:[],//api接口权限数据
+        success:[],//成功  或者  失败,
+        update_User:0,
         setIdentityApiInfo: {},//给身份设置api接口权限
         setIdentityViewInfo: {},//给身份设定视图权限
         addAuthorityApiInfo:{}//添加api接口权限
@@ -23,6 +25,9 @@ export default {
             // console.log(payload);
             let data = yield call(AddUsers, payload)
             console.log(data)
+            if(data.code === 0) {
+                return 
+            }
         },
         //选择身份id
         *SelectRankId({ payload }, { call, put }) {  // eslint-disable-line
@@ -36,10 +41,22 @@ export default {
         *UpdateUser({ payload }, { call, put }) {
             let data = yield call(UpUser, payload)
             console.log(data)
-            // yield put({
-            //     type: 'ChangeUser',
-            //     payload: data.data
-            // });
+            yield put({
+                type: 'ChangeUser',
+                payload: data.code
+            });
+        },
+        //添加身份
+        *AddTheRank({ payload }, { call, put }) {
+            let data = yield call(AddRank,payload)
+            console.log(data)
+            if(data.code === 0) {
+                return
+            }
+            yield put({
+                type: 'AddRankThe',
+                payload: data.code
+            });
         },
         //获取视图权限信息
         *getView_authority({ payload }, { call, put }) {  // eslint-disable-line
@@ -111,8 +128,12 @@ export default {
             return { ...state, rankid: action.payload }
         },
         //更新用户
-        ChangeUser(state, action) {
-            return { ...state, rankid: action.payload }
+        ChangeUser(state,action) {
+            return {...state,update_User:action.payload}
+        },
+        //添加身份
+        AddRankThe(state,action) {
+            return {...state,success:action.payload}
         },
         UpView_authority(state, action) {
             return { ...state, View_authority: action.payload }

@@ -9,23 +9,37 @@ function addRank(props) {
     function callback(key) {
       console.log(key);
     }
+    //处理表单提交
+    let handleSubmit = () => {
+        props.form.validateFields((err, values) => {
+        if (!err) {
+            console.log(values)
+           props.AddTheRank({identity_text:values.identity_text})
+        }
+     });
+    };
+    useEffect(() => {
+        if(props.success === 1) {
+            message.success('添加成功')
+        }
+    })
     return (
         <div className={styles.AddUser_user_page}>
         <div className={styles.AddUser_user_title}>
-            <Radio.Group>
+            <Radio.Group value='rank'>
                     <Radio.Button value="rank">添加身份</Radio.Button>
             </Radio.Group>
         </div>
         <div className={styles.AddUser_user_input}>
         <div className={styles.AddUser_user_form}>
-            <Form className="login-form">
+            <Form className="login-form" onSubmit={handleSubmit}>
                 <div>
                     <Form.Item>
-                        {getFieldDecorator('username', {
+                        {getFieldDecorator('identity_text', {
                             validateFirst: "onBlur",
                             rules: [
                             { required: true, message: 'Please input your username!' },
-                            { min: 6, max: 15, message: "6到15位组成" }
+                            { min: 3, max: 15, message: "6到15位组成" }
                             ],
                         })(
                             <Input
@@ -36,7 +50,7 @@ function addRank(props) {
                     </Form.Item>
                 </div>
                 <div className={styles.AddUser_user_Btn}>
-                    <Button style={{ width : 120 ,marginRight: 20}} type="button" className='ant-btn ant-btn-primary AddUser-btn'>
+                    <Button style={{ width : 120 ,marginRight: 20}} htmlType="submit" type="button" className='ant-btn ant-btn-primary AddUser-btn'>
                         确定
                     </Button>
                     <Button>重置</Button>
@@ -50,5 +64,20 @@ function addRank(props) {
 
 addRank.propTypes = {
 };
-
-export default Form.create()(addRank);
+let mapStateProps = (state) => {
+    return {
+        ...state,
+        ...state.AddTheRank
+    }
+}
+let mapDispatchProps = (dispatch) => {
+    return {
+        AddTheRank(payload) {
+            dispatch({
+                type: "AddUser/AddTheRank",
+                payload
+            })
+        }
+    }
+}
+export default connect(mapStateProps,mapDispatchProps)(Form.create()(addRank));
