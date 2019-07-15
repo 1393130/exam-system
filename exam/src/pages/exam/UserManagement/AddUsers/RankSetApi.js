@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import styles from './AddUsers.scss'
 import { Form, Icon, Input, Button, Checkbox, message, Select, Radio } from 'antd';
 function addAttempt(props) {
-    console.log(props.Api_authority)
     useEffect(() => {
         props.getApi_authority()
     }, [])

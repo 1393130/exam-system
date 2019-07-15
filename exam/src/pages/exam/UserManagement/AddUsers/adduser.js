@@ -3,7 +3,10 @@ import { connect } from 'dva';
 import styles from './AddUsers.scss'
 import { Form, Icon, Input, Button, message , Select , Radio} from 'antd';
 function AddUser(props) {
-    console.log(props.rankid)
+    console.log(props)
+    if(props.update_User === 1) {
+        message.success('更新成功')
+    }
     //表单验证
     const {getFieldDecorator} = props.form;
     //切换
@@ -15,17 +18,22 @@ function AddUser(props) {
     let handleBtnChange = (e) => {
         changeBtn(e.target.value)
     }
-     //处理表单提交
+      //处理表单提交
     let handleSubmit = () => {
         props.form.validateFields((err, values) => {
         if (!err) {
-            console.log(values)
-            props.AddUser({user_name:values.username,user_pwd:values.password})
+            if(flag === 'user') {
+                props.AddUser({user_name:values.username,user_pwd:values.password})
+            } else if(flag === 'update') {
+                console.log(values.user_id)
+                props.UpdateUser({user_id:values.user_id,user_name:values.username,user_pwd:values.password})
+            }
         }
-        });
+     });
     };
     useEffect(() => {
        props.SelectRankId()
+       props.userDisplay('/user/user')
     },[])
     const { Option } = Select
     return (
@@ -41,13 +49,13 @@ function AddUser(props) {
             <Form className="login-form" onSubmit={handleSubmit}>
                 <div>
                    { flag === 'update' ? <Form.Item>
-                        {getFieldDecorator('questions_type_id', {
+                        {getFieldDecorator('user_id', {
                             initialValue: "请选择身份ID"
                         })(
                             <Select style={{ width: 200 }}>
                                 {
-                                    props.rankid.length > 0 ? props.rankid.map((item, index) => {
-                                        return <Option value={item.identity_id} key={item.identity_id} >{item.identity_text}</Option>
+                                    props.userDisplayInfo.length > 0 ? props.userDisplayInfo.map((item, index) => {
+                                        return <Option value={item.user_id} key={item.user_id} >{item.user_name}</Option>
                                     }) : null
                                 }
                             </Select>,
@@ -115,7 +123,9 @@ let mapStateProps = (state) => {
     return {
         ...state,
         ...state.AddUser,
-        ...state.SelectRankId
+        ...state.SelectRankId,
+        ...state.userDisplay,
+        ...state.UpdateUser
     }
 }
 let mapDispatchProps = (dispatch) => {
@@ -135,11 +145,19 @@ let mapDispatchProps = (dispatch) => {
         },
          //更新用户
          UpdateUser(payload) {
+             console.log(payload)
             dispatch({
                 type:'AddUser/UpdateUser',
                 payload
             })
-        }
+        },
+         //展示用户数据
+         userDisplay: payload => {
+            dispatch({
+                type: "userDisplay/userDisplay",
+                payload
+            })
+        },
     }
 }
 export default connect(mapStateProps,mapDispatchProps)(Form.create()(AddUser));
