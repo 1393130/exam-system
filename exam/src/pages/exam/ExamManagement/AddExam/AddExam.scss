@@ -15,6 +15,16 @@
         width: 100%;
         background: #ffffff;
         padding: 24px;
-        border-radius: 10px;
+        border-radius: 10px; 
+        form{
+            width:100%;
+            >div{
+                margin-bottom:40px;
+                h4{
+                    width: 100%;
+                    font-size: 18px;
+                }
+            }
+        }
     }
 }

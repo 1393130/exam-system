@@ -28,6 +28,7 @@ app.model(require('./models/editQuestion').default);//修改试题数据
 app.model(require('./models/AllCheckQuestion').default);//获取所有试题
 app.model(require('./models/userDisplay').default);//用户展示
 app.model(require('./models/AddUser').default);//添加用户
+app.model(require('./models/AddExam').default);//添加考试
 
 
 // 4. Router

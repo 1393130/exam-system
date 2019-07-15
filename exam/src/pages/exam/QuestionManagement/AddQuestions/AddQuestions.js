@@ -8,7 +8,6 @@ function AddQuestion(props) {
   if(props.addInfo==1){
     message.success('添加成功')
   }
-  console.log(props)
   useEffect(() => {
     props.getExamType()//获取考试类型
     props.getSubject()//获取课程类型
@@ -43,7 +42,6 @@ function AddQuestion(props) {
         values.subject_id = subjectID;
         values.user_id = props.userInfo.user_id;
         let obj=Object.values(values);
-        console.log(obj);
         if(obj.includes(undefined)){
           message.error('参数不完整')
         }else{
