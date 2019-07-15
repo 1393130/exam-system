@@ -3,14 +3,26 @@ import { connect } from 'dva';
 import styles from './AddUsers.scss'
 import { Form, Icon, Input, Button, Checkbox, message, Select, Radio } from 'antd';
 function RankSetView(props) {
+    if (props.setIdentityViewInfo.code === 1) {
+        message.success(props.setIdentityViewInfo.code.msg)
+    }
     useEffect(() => {
         props.getView_authority()
+        props.SelectRankId()
     }, [])
     //表单验证
     const { getFieldDecorator } = props.form;
     //重置
     let handleReset = () => {
         props.form.resetFields();
+    };
+    let handleSubmit = () => {
+        props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values)
+                props.setIdentityView(values)
+            }
+        });
     };
     const { Option } = Select;
     return (
@@ -22,21 +34,23 @@ function RankSetView(props) {
             </div>
             <div className={styles.AddUser_user_input}>
                 <div className={styles.AddUser_user_form}>
-                    <Form className="login-form">
+                    <Form className="login-form" onSubmit={handleSubmit}>
                         <div>
                             <Form.Item>
-                                {getFieldDecorator('questions_type_id', {
+                                {getFieldDecorator('identity_id', {
                                     initialValue: "请选择身份id"
                                 })(
                                     <Select style={{ width: 200 }}>
                                         {
-
+                                            props.rankid.length > 0 ? props.rankid.map((item, index) => {
+                                                return <Option value={item.identity_id} key={item.identity_id} >{item.identity_text}</Option>
+                                            }) : null
                                         }
                                     </Select>,
                                 )}
                             </Form.Item>
                             <Form.Item>
-                                {getFieldDecorator('questions_type_id', {
+                                {getFieldDecorator('view_authority_id', {
                                     initialValue: "请选择视图权限id"
                                 })(
                                     <Select style={{ width: 200 }}>
@@ -50,9 +64,9 @@ function RankSetView(props) {
                             </Form.Item>
                         </div>
                         <div className={styles.AddUser_user_Btn}>
-                            <Button style={{ width: 120, marginRight: 20 }} type="button" className='ant-btn ant-btn-primary AddUser-btn'>
+                            <Button style={{ width: 120, marginRight: 20 }} htmlType="submit" type="button" className='ant-btn ant-btn-primary AddUser-btn'>
                                 确定
-                    </Button>
+                            </Button>
                             <Button onClick={handleReset}>重置</Button>
                         </div>
                     </Form>
@@ -76,6 +90,19 @@ const mapDispatchProps = (dispatch) => {
         getView_authority: payload => {
             dispatch({
                 type: "AddUser/getView_authority"
+            })
+        },
+        //选择身份id
+        SelectRankId: payload => {
+            dispatch({
+                type: 'AddUser/SelectRankId',
+            })
+        },
+        //给身份设定视图权限
+        setIdentityView: payload => {
+            dispatch({
+                type: 'AddUser/setIdentityView',
+                payload
             })
         }
     }

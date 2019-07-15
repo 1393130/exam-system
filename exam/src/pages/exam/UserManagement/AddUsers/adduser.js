@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import styles from './AddUsers.scss'
 import { Form, Icon, Input, Button, message , Select , Radio} from 'antd';
 function AddUser(props) {
-    console.log(props.rankid)
     //表单验证
     const {getFieldDecorator} = props.form;
     //切换
