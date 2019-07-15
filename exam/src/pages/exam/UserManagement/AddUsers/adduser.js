@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import styles from './AddUsers.scss'
 import { Form, Icon, Input, Button, message , Select , Radio} from 'antd';
 function AddUser(props) {
-    console.log(props)
     if(props.update_User === 1) {
         message.success('更新成功')
     }
