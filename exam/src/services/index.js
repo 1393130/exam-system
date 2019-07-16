@@ -13,3 +13,4 @@ export * from './editQuestion'//修改试题
 export * from './userDisplay'//用户展示
 export * from './AddUser'//添加用户
 export * from './AddExam'//考试管理
+export * from './ClassManage'//班级管理
