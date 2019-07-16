@@ -36,11 +36,9 @@ export default {
     //同步
     reducers: {
       upEaxminAtion(state, action) {
-          console.log(action)
         return { ...state , list:action.payload}
       },
       upExam(state, action) {
-        console.log(action)
       return { ...state , detail:action.payload}
     }
     },

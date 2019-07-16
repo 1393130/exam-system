@@ -5,6 +5,7 @@ import { Tag, Button, Select, Form , Radio , Table , Divider} from 'antd';
 import moment from 'moment'
 moment.locale('zh-cn')
 function ExamList(props) {
+    console.log(props)
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
@@ -159,6 +160,7 @@ const mapToProps = state => {
       },
       //试卷列表
       EaxminAtions:(payload) => {
+          console.log(payload)
           dispatch({
               type:'Examination/EaxminAtions',
               payload

@@ -29,6 +29,7 @@ app.model(require('./models/AllCheckQuestion').default);//获取所有试题
 app.model(require('./models/userDisplay').default);//用户展示
 app.model(require('./models/AddUser').default);//添加用户
 app.model(require('./models/Eaxmination').default);//试卷列表
+app.model(require('./models/StudentMange').default);//学生管理
 
 
 // 4. Router
