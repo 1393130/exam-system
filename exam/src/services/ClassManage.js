@@ -12,10 +12,18 @@ export function addGrade(params) {
   return request.post('/manger/grade', params)
 }
 //删除班级接口
-export function deleteGrade(params) {
-  return request.delete('/manger/grade/delete', { params })
+export function deleteGrade(data) {
+  return request.delete('/manger/grade/delete', { data })
 }
 //编辑接口
 export function editGrade(params){
-  return request.put('/manger/grade/update',{params})
+  return request.put('/manger/grade/update',params)
+}
+//添加教室
+export function addClassroom(params){
+  return request.post('/manger/room',params)
+}
+//删除教室
+export function delClassroom(data){
+  return request.delete('/manger/room/delete',{data})
 }

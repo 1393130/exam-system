@@ -1,4 +1,4 @@
-import { getGrade, getRoom, addGrade, deleteGrade, editGrade } from "../services/ClassManage"
+import { getGrade, getRoom, addGrade, deleteGrade, editGrade,addClassroom,delClassroom } from "../services/ClassManage"
 export default {
 
     namespace: 'ClassManage',
@@ -67,13 +67,34 @@ export default {
         //编辑接口
         *editGrade({ payload }, { call, put }) {  // eslint-disable-line
             let data = yield call(editGrade, payload)
-            console.log(data)
             if (data.code === 0) {
                 return
             };
             //重新获取更新视图
             yield put({
                 type: 'getGrade',
+            });
+        },
+        //添加教室
+        *addClassroom({ payload }, { call, put }) {  // eslint-disable-line
+            let data = yield call(addClassroom, payload)
+            if (data.code === 0) {
+                return
+            };
+            //重新获取更新视图
+            yield put({
+                type: 'getRoom',
+            });
+        },
+        //删除教室
+        *delClassroom({ payload }, { call, put }) {  // eslint-disable-line
+            let data = yield call(delClassroom, payload)
+            if (data.code === 0) {
+                return
+            };
+            //重新获取更新视图
+            yield put({
+                type: 'getRoom',
             });
         },
     },

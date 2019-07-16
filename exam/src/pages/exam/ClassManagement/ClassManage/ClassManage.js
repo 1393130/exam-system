@@ -36,7 +36,7 @@ function ClassManage(props) {
     };
     //删除
     let delete_action = ({ grade_id }) => {
-        props.deleteGrade(grade_id)
+        props.deleteGrade({grade_id})
     }
     //编辑
     let edit_action = (Obj) => {
@@ -61,6 +61,7 @@ function ClassManage(props) {
                     edit_obj.subject_id=values.subject_id_edit
                     edit_obj.grade_name=values.grade_name_edit
                     edit_obj.grade_id=edit_info.grade_id
+                    console.log(edit_obj)
                     change_edit_info({})
                     props.editGrade(edit_obj)
                 } else {
