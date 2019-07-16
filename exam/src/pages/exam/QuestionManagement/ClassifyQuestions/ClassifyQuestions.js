@@ -1,10 +1,8 @@
 import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import style from './ClassifyQuestions.scss'
-
 import { Button, Modal, Form, Input, Radio , Table, Divider, Tag , Spin, message} from 'antd';
 function ClassifyQuestion(props) {
-  console.log(props)
   const { Column, ColumnGroup } = Table
   useEffect(() => {
      props.getClassify()

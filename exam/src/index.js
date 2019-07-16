@@ -30,6 +30,8 @@ app.model(require('./models/userDisplay').default);//用户展示
 app.model(require('./models/AddUser').default);//添加用户
 app.model(require('./models/Eaxmination').default);//试卷列表
 app.model(require('./models/StudentMange').default);//学生管理
+app.model(require('./models/AddExam').default);//添加考试
+app.model(require('./models/ClassManage').default);//班级管理
 
 
 // 4. Router
