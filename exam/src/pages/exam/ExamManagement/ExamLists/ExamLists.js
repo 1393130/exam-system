@@ -1,7 +1,9 @@
 import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import styles from './ExamList.scss'
-import { Tag, Button, Select, Form , Radio , Table} from 'antd';
+import { Tag, Button, Select, Form , Radio , Table , Divider} from 'antd';
+import moment from 'moment'
+moment.locale('zh-cn')
 function ExamList(props) {
     //从form中校验
     const { getFieldDecorator } = props.form;
@@ -10,44 +12,40 @@ function ExamList(props) {
     //点击
     let [flag , changeBtn] = useState('all')
     let handleBtnChange = (e) => {
-        console.log(e)
+        changeBtn(e.target.value)
+        if(flag === 'all') {
+            console.log(2)                
+        } else if(flag === 'underway') {
+            console.log(2)
+        } else if(flag === 'stop') {
+            console.log(3)
+        }  
     }
-    let data = [
-        {
-            'title':'你好'
-        }
-    ]
     useEffect(() => {
         props.getExamType()//获取考试类型
         props.getSubject()//获取课程类型
+        props.EaxminAtions({}) //试卷列表
       }, [])
     // //处理表单提交
-    // let handleSubmit = () => {
-    //     props.form.validateFields((err, values) => {
-    //     if (!err) {
-    //         if (values.exam_id !== '') {
-    //         let examID = props.examType.find(item => item.exam_name === values.exam_id).exam_id;
-    //         values.exam_id = examID
-    //         }
-    //         let obj = {
-    //         ...values,
-    //         subject_id: subjectID
-    //         }
-    //         for (let i in obj) {
-    //         if (obj[i] === "") {
-    //             delete obj[i]
-    //         }
-    //         }
-    //         props.getCheckQuestion(obj)
-    //     }
-    //     });
-    // };
+    let handleSubmit = () => {
+        props.form.validateFields((err, values) => {
+        if (!err) {
+            props.EaxminAtions({}) 
+        }
+        });
+    };
+    let {list} = props.Examination
+    let data = list
+    //点击跳考试详情
+    let ToQuestionDetail = (item) => {
+        props.history.push({ pathname: `/home/ExamListDetail/?id=${item}` })
+    }
     return (
         <div className={styles.ExamList_wrap}>
             <h2>试卷列表</h2>
             <div className={styles.ExamList_type}>
             <div className={styles.ExamList_form}>
-            <Form layout="inline">
+            <Form layout="inline" onSubmit={handleSubmit}>
                 <Form.Item label='考试类型'>
                     {getFieldDecorator('exam_id', {
                           initialValue: ""
@@ -55,10 +53,10 @@ function ExamList(props) {
                     <Select style={{ width: 200 }}>
                     {
                         props.examType && props.examType.map((item, index) => {
-                           return <Option value={item.exam_name} key={item.exam_id}>{item.exam_name}</Option>
+                           return <Option value={item.exam_id} key={item.exam_id}>{item.exam_name}</Option>
                         })
-                        }
-                        </Select>,
+                    }
+                    </Select>,
                     )}
                 </Form.Item>
                 <Form.Item label='课程'>
@@ -68,7 +66,7 @@ function ExamList(props) {
                         <Select style={{ width: 200 }}>
                         {
                             props.subjectType && props.subjectType.map((item, index) => {
-                            return <Option value={item.subject_text} key={item.subject_id}>{item.subject_text}</Option>
+                            return <Option value={item.subject_id} key={item.subject_id}>{item.subject_text}</Option>
                             })
                         }
                         </Select>,
@@ -96,13 +94,38 @@ function ExamList(props) {
                     </Radio.Group>
                 </div>
                 <div className={styles.ExamList_list_list}>
-                    <Table dataSource={data} rowKey="questions_type_id">
-                        <Column title="试卷信息" dataIndex='questions_type_id' rowKey="questions_type_id" />
-                        <Column title="班级" dataIndex="questions_type_text" rowKey="questions_type_id" />
-                        <Column title="创建人" dataIndex="address1" rowKey="questions_type_id1" />
-                        <Column title="开始时间" dataIndex="address2" rowKey="questions_type_id2" />
-                        <Column title="结束时间" dataIndex="address3" rowKey="questions_type_id3" />
-                        <Column title="操作" dataIndex="address4" rowKey="questions_type_id4" />
+                    <Table dataSource={data} rowKey="exam_id">
+                        <Column title="试卷信息" dataIndex='title' rowKey="title" />
+                        <Column title="班级" dataIndex="room_text" rowKey="room_text" />
+                        <Column title="创建人" dataIndex="user_name" rowKey="user_name" />
+                        <Column 
+                            title="开始时间"
+                            key="start_time"
+                            render={(text, record) => (
+                                <span>
+                                    {moment(text.start_time*1).format('YYYY-MM-DD HH:mm:ss')}
+                                </span>
+                            )}
+                        />
+                         <Column 
+                            title="开始时间"
+                            key="end_time"
+                            render={(text, record) => (
+                                <span>
+                                    {moment(text.start_time*1).format('YYYY-MM-DD HH:mm:ss')}
+                                </span>
+                            )}
+                        />
+                        <Column 
+                            title="操作"
+                            key="action"
+                            render={(text, record) => (
+                                <span onClick={() => { ToQuestionDetail('exam_exam_id') }}>
+                                <a href="javascript:;">详情</a>
+                                <Divider type="详情" />
+                                </span>
+                            )}
+                        />
                     </Table> 
                 </div>
             </div>
@@ -113,7 +136,12 @@ function ExamList(props) {
 ExamList.propTypes = {
 };
 const mapToProps = state => {
-    return { ...state, ...state.getExamType, ...state.getSubject}
+    return { 
+        ...state, 
+        ...state.getExamType, 
+        ...state.getSubject,
+        ...state.EaxminAtions
+    }
   }
   const mapDispatchToProps = (dispatch) => {
     return {
@@ -129,13 +157,13 @@ const mapToProps = state => {
           type: "getSubject/getSubject"
         })
       },
-       //查询数据
-        getCheckQuestion: (payload) => {
-            dispatch({
-            type: 'AllCheckQuestion/getCheckQuestion',
-            payload
-            })
-        },
+      //试卷列表
+      EaxminAtions:(payload) => {
+          dispatch({
+              type:'Examination/EaxminAtions',
+              payload
+          })
+      }
     }
   }
 export default connect(mapToProps,mapDispatchToProps)(Form.create()(ExamList));
