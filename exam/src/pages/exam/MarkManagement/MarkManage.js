@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
+import {injectIntl} from 'react-intl';
 
-function MarkManage() {
+function MarkManage(props) {
     return (
         <div>
-            批卷管理
+            {props.intl.formatMessage({id: 'router.MarkManage.markmanage'})}
     </div>
     );
 }
@@ -12,4 +13,4 @@ function MarkManage() {
 MarkManage.propTypes = {
 };
 
-export default connect()(MarkManage);
+export default injectIntl(connect()(MarkManage));

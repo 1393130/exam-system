@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import styles from './CheckQuestions.scss';
 import { Tag, Button, Select, Form } from 'antd';
 import List from "./list"
+import {injectIntl} from 'react-intl';
 
 
 function CheckQuestion(props) {
@@ -56,7 +57,7 @@ function CheckQuestion(props) {
   const { Option } = Select;
   return (
     <div className={styles.checkquest}>
-      <h2>查看试题</h2>
+      <h2>{props.intl.formatMessage({id: 'router.questions.view'})}</h2>
       <section className={styles.checkquest_cont}>
         <Form onSubmit={handleSubmit}>
           <div className={styles.classify_quest}>
@@ -173,4 +174,4 @@ let mapDispatchProps = (dispatch) => {
     }
   }
 }
-export default connect(mapStateProps, mapDispatchProps)(Form.create()(CheckQuestion));
+export default injectIntl(connect(mapStateProps, mapDispatchProps)(Form.create()(CheckQuestion)));

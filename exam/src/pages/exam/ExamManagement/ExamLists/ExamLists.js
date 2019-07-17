@@ -3,9 +3,10 @@ import { connect } from 'dva';
 import styles from './ExamList.scss'
 import { Tag, Button, Select, Form , Radio , Table , Divider} from 'antd';
 import moment from 'moment'
+import {injectIntl} from 'react-intl';
 moment.locale('zh-cn')
+
 function ExamList(props) {
-    console.log(props)
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
@@ -43,7 +44,7 @@ function ExamList(props) {
     }
     return (
         <div className={styles.ExamList_wrap}>
-            <h2>试卷列表</h2>
+            <h2>{props.intl.formatMessage({id: 'router.ExamManage.examlist'})}</h2>
             <div className={styles.ExamList_type}>
             <div className={styles.ExamList_form}>
             <Form layout="inline" onSubmit={handleSubmit}>
@@ -168,4 +169,4 @@ const mapToProps = state => {
       }
     }
   }
-export default connect(mapToProps,mapDispatchToProps)(Form.create()(ExamList));
+export default injectIntl(connect(mapToProps,mapDispatchToProps)(Form.create()(ExamList)));

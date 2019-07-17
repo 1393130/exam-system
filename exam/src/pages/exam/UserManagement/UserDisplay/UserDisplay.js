@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './UserDisplay.scss'
 import { Button, Radio, Icon, Table, Divider, Tag } from 'antd';
+import {injectIntl} from 'react-intl';
 
 function UserDisplay(props) {
     const { Column, ColumnGroup } = Table;
@@ -40,7 +41,7 @@ function UserDisplay(props) {
     }
     return (
         <div className={styles.userdisplay}>
-            <h2>用户展示</h2>
+            <h2>{props.intl.formatMessage({id: 'router.UserManage.userdisplay'})}</h2>
             <div className={styles.userClassify}>
                 <Radio.Group value={size} onChange={handleSizeChange}>
                     {
@@ -103,4 +104,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapToProps, mapDispatchToProps)(UserDisplay);
+export default injectIntl(connect(mapToProps, mapDispatchToProps)(UserDisplay));

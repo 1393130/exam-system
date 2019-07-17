@@ -2,6 +2,8 @@ import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import styles from './StudentManage.scss'
 import { Tag, Button, Select, Form , Radio , Table , Divider ,Input , Icon} from 'antd';
+import {injectIntl} from 'react-intl';
+
 function StudentManage(props) {
     console.log(props)
     //从form中校验
@@ -26,7 +28,7 @@ function StudentManage(props) {
     let data = []
     return (
         <div className={styles.StudentManage_wrap}>
-            <h2>试卷列表</h2>
+            <h2>{props.intl.formatMessage({id: 'router.ClassManage.studentmanage'})}</h2>
             <div className={styles.StudentManage_type}>
             <div className={styles.StudentManage_form}>
             <Form layout="inline" onSubmit={handleSubmit}>
@@ -123,4 +125,4 @@ let mapDispatchProps = (dispatch) => {
         }
    }
 }
-export default connect(mapStateProps,mapDispatchProps)(Form.create()(StudentManage));
+export default injectIntl(connect(mapStateProps,mapDispatchProps)(Form.create()(StudentManage)));
