@@ -5,7 +5,6 @@ import { Tag, Button, Select, Form , Radio , Table , Divider ,Input , Icon} from
 import {injectIntl} from 'react-intl';
 
 function StudentManage(props) {
-    console.log(props)
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;

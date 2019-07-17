@@ -10,7 +10,6 @@ function CheckQuestion(props) {
   const { CheckableTag } = Tag;
   const [selectedTags, changeselectedTags] = useState([])
   const [subjectID, changeSubjectID] = useState('')
-  console.log(props);
   //判断全选
   useEffect(() => {
     props.getExamType()//获取考试类型
