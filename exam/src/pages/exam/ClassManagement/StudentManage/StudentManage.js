@@ -18,6 +18,8 @@ function StudentManage(props) {
     useEffect(() => {
         props.StudentList()
         props.StudentWithoutClasses()
+        props.getRoom()
+        props.getGrade()
     },[])
     // //处理表单提交
     let handleSubmit = () => {
@@ -76,11 +78,11 @@ function StudentManage(props) {
                           initialValue: "请选择教室号"
                     })(
                     <Select style={{ width: 200 }}>
-                    {/* {
-                        props.examType && props.examType.map((item, index) => {
-                           return <Option value={item.exam_id} key={item.exam_id}>{item.exam_name}</Option>
+                    {
+                        props.room && props.room.map((item, index) => {
+                           return <Option value={item.room_id} key={item.room_id}>{item.room_text}</Option>
                         })
-                    } */}
+                    }
                     </Select>,
                     )}
                 </Form.Item>
@@ -89,11 +91,11 @@ function StudentManage(props) {
                         initialValue: "班级名"
                     })(
                         <Select style={{ width: 200 }}>
-                        {/* {
-                            props.subjectType && props.subjectType.map((item, index) => {
-                            return <Option value={item.subject_id} key={item.subject_id}>{item.subject_text}</Option>
+                        {
+                            props.grade && props.grade.map((item, index) => {
+                            return <Option value={item.grade_id} key={item.grade_id}>{item.grade_name}</Option>
                             })
-                        } */}
+                        }
                         </Select>,
                     )}
                 </Form.Item>
@@ -141,7 +143,8 @@ let mapStateProps = (state) => {
     return {
         ...state,
         ...state.StudentList,
-        ...state.StudentWithoutClasses
+        ...state.StudentWithoutClasses,
+        ...state.ClassManage
     }
 }
 let mapDispatchProps = (dispatch) => {
@@ -164,7 +167,19 @@ let mapDispatchProps = (dispatch) => {
             type:'Student/ScholasticDelete',
             payload
         })
-    }
+    },
+    //获取所有教室
+    getRoom: () => {
+        dispatch({
+            type: 'ClassManage/getRoom'
+        })
+    },
+    //获取已经分配教室的班级
+    getGrade: () => {
+        dispatch({
+            type: 'ClassManage/getGrade'
+        })
+    },
    }
 }
 export default injectIntl(connect(mapStateProps,mapDispatchProps)(Form.create()(StudentManage)));

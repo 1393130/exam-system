@@ -20,5 +20,5 @@ export default {
     'router.ClassManage.studentmanage':'学生管理',
 
     'router.MarkManage':'阅卷管理',
-    'router.MarkManage.markmanage':'待批管理'
+    'router.MarkManage.markmanage':'待批班级'
   }

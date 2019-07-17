@@ -141,7 +141,7 @@ function editDetail(props) {
               )}
             </Form.Item>
           </div>
-          <Button type="primary" onClick={showModal} type="primary" size="large">
+          <Button  onClick={showModal} type="primary" size="large">
             提示
         </Button>
           <Modal
