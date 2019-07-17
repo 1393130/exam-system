@@ -1,15 +1,22 @@
 import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import styles from './StudentManage.scss'
-import { Tag, Button, Select, Form , Radio , Table , Divider ,Input , Icon} from 'antd';
+import { Tag, Button, Select, Form , Radio , Table ,Input , Icon , pagination , Modal} from 'antd';
 function StudentManage(props) {
-    console.log(props)
+    //已经分班的
+    let {classes} = props.Student
+    //没有分班的
+    let {StudentWithoutList} = props.Student
+    //合并后的所有班级
+    let allStudent=[...classes,...StudentWithoutList]
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
-    const { Column, ColumnGroup } = Table
+    const { Column } = Table;
+    const { confirm } = Modal;
     useEffect(() => {
         props.StudentList()
+        props.StudentWithoutClasses()
     },[])
     // //处理表单提交
     let handleSubmit = () => {
@@ -23,7 +30,26 @@ function StudentManage(props) {
     let handleReset = () => {
         props.form.resetFields();
     };
-    let data = []
+    //分页器
+    let pagination = {
+        defaultPageSize:6,
+        showQuickJumper:true,
+        showSizeChanger:true
+    }
+    let data = allStudent
+    //删除学生
+    let StudentDelete = (item) => {
+        confirm({
+            title: '删除',
+            content: '确定删除吗？',
+            onOk() {
+              props.ScholasticDelete({id:item.student_id})
+            },
+            onCancel() {
+            },
+          });
+        
+    }
     return (
         <div className={styles.StudentManage_wrap}>
             <h2>试卷列表</h2>
@@ -84,22 +110,24 @@ function StudentManage(props) {
             </div>
             <div className={styles.StudentManage_cont}>
             <div className={styles.ExamList_list_list}>
-                    <Table dataSource={data} rowKey="exam_id">
-                        <Column title="姓名" dataIndex='title' rowKey="title" />
-                        <Column title="学号" dataIndex="room_text" rowKey="room_text" />
-                        <Column title="班级" dataIndex="user_name1" rowKey="user_name1" />
-                        <Column title="教室" dataIndex="user_name2" rowKey="user_name2" />
-                        <Column title="密码" dataIndex="user_name3" rowKey="user_name3" />
+                    <Table dataSource={data}  rowKey="student_id"
+                    pagination={pagination}
+                    >
+                        <Column title="姓名" dataIndex='student_name' rowKey="student_name" />
+                        <Column title="学号" dataIndex="student_id" rowKey="student_id" />
+                        <Column title="班级" dataIndex="room_text" rowKey="room_text" />
+                        <Column title="教室" dataIndex="grade_name" rowKey="grade_name" />
+                        <Column title="密码" dataIndex="student_pwd" rowKey="student_pwd" />
                         <Column 
                             title="操作"
                             key="action"
                             render={(text, record) => (
-                                <span>
+                                <span onClick={() => StudentDelete(text)}>
                                     删除
                                 </span>
                             )}
                         />
-                    </Table> 
+                    </Table>
                 </div>
             </div>
         </div>
@@ -111,16 +139,31 @@ StudentManage.propTypes = {
 let mapStateProps = (state) => {
     return {
         ...state,
-        ...state.StudentList
+        ...state.StudentList,
+        ...state.StudentWithoutClasses
     }
 }
 let mapDispatchProps = (dispatch) => {
    return {
+       //分班
     StudentList() {
-            dispatch({
-                type:'Student/StudentList'
-            })
-        }
+        dispatch({
+            type:'Student/StudentList'
+        })
+    },
+    //没有分班
+    StudentWithoutClasses() {
+        dispatch({
+            type:'Student/StudentWithoutClasses'
+        })
+    },
+    //删除学生
+    ScholasticDelete(payload) {
+        dispatch({
+            type:'Student/ScholasticDelete',
+            payload
+        })
+    }
    }
 }
 export default connect(mapStateProps,mapDispatchProps)(Form.create()(StudentManage));
