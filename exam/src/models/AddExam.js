@@ -4,7 +4,7 @@ export default {
     namespace: 'AddExam',
 
     state: {
-        add_exam_info:0
+        exam_info:{}
     },
 
     subscriptions: {
@@ -14,7 +14,6 @@ export default {
 
     effects: {
         *addExam({ payload }, { call, put }) {  // eslint-disable-line
-            console.log(payload);
             let data = yield call(addExam,payload)
             console.log(data)
             if (data.code === 0) {
@@ -22,14 +21,14 @@ export default {
             }
             yield put({
                 type: 'upadd_exam_info',
-                payload: data.code
+                payload: data.data
             });
         },
     },
 
     reducers: {
         upadd_exam_info(state, action) {
-            return { ...state, add_exam_info:action.payload };
+            return { ...state, exam_info:action.payload };
         },
     },
 

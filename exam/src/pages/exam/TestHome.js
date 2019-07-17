@@ -29,6 +29,9 @@ import ExamListDetail from './detail/ExamListDetail'
 
 import MenuList from '../../components/Menu'
 
+//创建试卷
+import Add_Exam from './ExamManagement/AddExam/Add_Exam'
+
 const { SubMenu } = Menu;
 
 const { Option } = Select;
@@ -97,6 +100,7 @@ function TestHome(props) {
                     <Route path="/home/QuestionDetail/:id" component={QuestionDetail}></Route>
                     <Route path="/home/editDetail/:id" component={editDetail}></Route>
                     <Route path="/home/ExamListDetail/:id" component={ExamListDetail}></Route>
+                    <Route path="/home/creatExam" component={Add_Exam}></Route>
                 </div>
             </div>
         </div>

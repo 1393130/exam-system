@@ -6,9 +6,6 @@ import locale from 'antd/lib/date-picker/locale/zh_CN';
 import {injectIntl} from 'react-intl';
 
 function AddExam(props) {
-    if (props.add_exam_info === 1) {
-        message.success("创建试卷成功")
-    }
     const { getFieldDecorator } = props.form;
     useEffect(() => {
         props.getExamType()//获取考试类型
@@ -22,7 +19,9 @@ function AddExam(props) {
                 values.start_time = +values.start_time;
                 values.end_time = +values.end_time
                 values.number = values.number * 1
-                props.addExam(values)
+                console.log(values)
+                // props.addExam(values)
+                props.history.push({pathname:'/home/creatExam',params:values})
             }
         });
     };

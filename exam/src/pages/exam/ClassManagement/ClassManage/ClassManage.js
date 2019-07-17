@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import style from './ClassManage.scss'
-import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, Spin, message, Select } from 'antd';
-import {injectIntl} from 'react-intl';
+import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, message, Select } from 'antd';
+import { injectIntl } from 'react-intl';
 
 function ClassManage(props) {
-    if (props.gradeInfo === 1) {
-        message.success("创建班级成功")
-    }
     useEffect(() => {
         props.getGrade() //获取已经分配教室的班级
         props.getRoom()//获取所有教室
         props.getSubject()//获取课程
     }, [])
+    useEffect(() => {
+        if (props.gradeInfo === 1) {
+            message.success("创建班级成功")
+        }
+    }, [props.gradeInfo])
     const { Column, ColumnGroup } = Table;
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
@@ -37,7 +39,7 @@ function ClassManage(props) {
     };
     //删除
     let delete_action = ({ grade_id }) => {
-        props.deleteGrade({grade_id})
+        props.deleteGrade({ grade_id })
     }
     //编辑
     let edit_action = (Obj) => {
@@ -51,17 +53,17 @@ function ClassManage(props) {
             if (!err) {
                 if (edit_flag) {
                     //编辑
-                    let edit_obj={}
-                    if(edit_info.room_text===values.room_id_edit){
-                        edit_obj.room_id=edit_info.room_id
+                    let edit_obj = {}
+                    if (edit_info.room_text === values.room_id_edit) {
+                        edit_obj.room_id = edit_info.room_id
                     }
-                    if(edit_info.subject_text===values.subject_id_text){
-                        edit_obj.subject_id=edit_info.subject_id
+                    if (edit_info.subject_text === values.subject_id_text) {
+                        edit_obj.subject_id = edit_info.subject_id
                     }
-                    edit_obj.room_id=values.room_id_edit
-                    edit_obj.subject_id=values.subject_id_edit
-                    edit_obj.grade_name=values.grade_name_edit
-                    edit_obj.grade_id=edit_info.grade_id
+                    edit_obj.room_id = values.room_id_edit
+                    edit_obj.subject_id = values.subject_id_edit
+                    edit_obj.grade_name = values.grade_name_edit
+                    edit_obj.grade_id = edit_info.grade_id
                     console.log(edit_obj)
                     change_edit_info({})
                     props.editGrade(edit_obj)
@@ -76,9 +78,8 @@ function ClassManage(props) {
     };
     return (
         <div className={style.question_box}>
-            {props.global ? <div className={style.loading}><Spin /></div> : null}
             <header className={style.question_header}>
-                <h2>{props.intl.formatMessage({id: 'router.ClassManage.classmanage'})}</h2>
+                <h2>{props.intl.formatMessage({ id: 'router.ClassManage.classmanage' })}</h2>
             </header>
             <section className={style.question_main}>
                 <div className={style.question_main_Add}>
@@ -112,7 +113,7 @@ function ClassManage(props) {
                                             />,
                                         )}
                                     </Form.Item>}
-                                { edit_flag?<Form.Item label="教室号：">
+                                {edit_flag ? <Form.Item label="教室号：">
                                     {getFieldDecorator('room_id_edit', {
                                         rules: [{ required: true, message: '请输入试题类型!' }],
                                         initialValue: edit_info.room_text
@@ -125,24 +126,24 @@ function ClassManage(props) {
                                             }
                                         </Select>,
                                     )}
-                                </Form.Item>:<Form.Item label="教室号：">
-                                    {getFieldDecorator('room_id', {
-                                        rules: [{ required: true, message: '请输入试题类型!' }],
-                                        initialValue: "教室号："
-                                    })(
-                                        <Select style={{ width: '100%' }}>
-                                            {
-                                                props.room && props.room.map((item, index) => {
-                                                    return <Option value={item.room_id} key={item.room_id}>{item.room_text}</Option>
-                                                })
-                                            }
-                                        </Select>,
-                                    )}
-                                </Form.Item>}
-                                {edit_flag?<Form.Item label="课程名：">
+                                </Form.Item> : <Form.Item label="教室号：">
+                                        {getFieldDecorator('room_id', {
+                                            rules: [{ required: true, message: '请输入试题类型!' }],
+                                            initialValue: "教室号："
+                                        })(
+                                            <Select style={{ width: '100%' }}>
+                                                {
+                                                    props.room && props.room.map((item, index) => {
+                                                        return <Option value={item.room_id} key={item.room_id}>{item.room_text}</Option>
+                                                    })
+                                                }
+                                            </Select>,
+                                        )}
+                                    </Form.Item>}
+                                {edit_flag ? <Form.Item label="课程名：">
                                     {getFieldDecorator('subject_id_edit', {
                                         rules: [{ required: true, message: '请输入试题类型!' }],
-                                        initialValue:edit_info.subject_text
+                                        initialValue: edit_info.subject_text
                                     })(
                                         <Select style={{ width: '100%' }}>
                                             {
@@ -152,20 +153,20 @@ function ClassManage(props) {
                                             }
                                         </Select>,
                                     )}
-                                </Form.Item>:<Form.Item label="课程名：">
-                                    {getFieldDecorator('subject_id', {
-                                        rules: [{ required: true, message: '请输入试题类型!' }],
-                                        initialValue: "课程名："
-                                    })(
-                                        <Select style={{ width: '100%' }}>
-                                            {
-                                                props.subjectType && props.subjectType.map((item, index) => {
-                                                    return <Option value={item.subject_id} key={item.subject_id}>{item.subject_text}</Option>
-                                                })
-                                            }
-                                        </Select>,
-                                    )}
-                                </Form.Item>}
+                                </Form.Item> : <Form.Item label="课程名：">
+                                        {getFieldDecorator('subject_id', {
+                                            rules: [{ required: true, message: '请输入试题类型!' }],
+                                            initialValue: "课程名："
+                                        })(
+                                            <Select style={{ width: '100%' }}>
+                                                {
+                                                    props.subjectType && props.subjectType.map((item, index) => {
+                                                        return <Option value={item.subject_id} key={item.subject_id}>{item.subject_text}</Option>
+                                                    })
+                                                }
+                                            </Select>,
+                                        )}
+                                    </Form.Item>}
                             </Form>
                         </Modal>
                     </div>
