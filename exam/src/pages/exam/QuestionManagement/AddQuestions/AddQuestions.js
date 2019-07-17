@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import Editor from 'for-editor'
 import styles from './AddQuestions.scss'
 import { Form, Input, Select, Button, Modal,message } from 'antd';
+import {injectIntl} from 'react-intl';
 
 function AddQuestion(props) {
   if(props.addInfo==1){
@@ -53,7 +54,7 @@ function AddQuestion(props) {
   const { Option } = Select;
   return (
     <div className={styles.addquestion}>
-      <h2>添加试题</h2>
+      <h2>{props.intl.formatMessage({id: 'router.questions.add'})}</h2>
       <section className={styles.addquestion_cont}>
         <Form onSubmit={handleSubmit}>
           <h4>题目信息</h4>
@@ -195,4 +196,4 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-export default connect(mapToProps, mapDispatchToProps)(Form.create()(AddQuestion));
+export default injectIntl(connect(mapToProps, mapDispatchToProps)(Form.create()(AddQuestion)));

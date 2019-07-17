@@ -1,7 +1,8 @@
 import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import styles from './StudentManage.scss'
-import { Tag, Button, Select, Form , Radio , Table ,Input , Icon , pagination , Modal} from 'antd';
+import {injectIntl} from 'react-intl';
+import { Tag, Button, Select, Form , Radio , Table ,Input , Icon , pagination , Modal , Divider} from 'antd';
 function StudentManage(props) {
     //已经分班的
     let {classes} = props.Student
@@ -52,7 +53,7 @@ function StudentManage(props) {
     }
     return (
         <div className={styles.StudentManage_wrap}>
-            <h2>试卷列表</h2>
+            <h2>{props.intl.formatMessage({id: 'router.ClassManage.studentmanage'})}</h2>
             <div className={styles.StudentManage_type}>
             <div className={styles.StudentManage_form}>
             <Form layout="inline" onSubmit={handleSubmit}>
@@ -166,4 +167,4 @@ let mapDispatchProps = (dispatch) => {
     }
    }
 }
-export default connect(mapStateProps,mapDispatchProps)(Form.create()(StudentManage));
+export default injectIntl(connect(mapStateProps,mapDispatchProps)(Form.create()(StudentManage)));

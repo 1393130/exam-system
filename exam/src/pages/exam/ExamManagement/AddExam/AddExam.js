@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import styles from './AddExam.scss'
 import { Form, Input, Button, Select, InputNumber, DatePicker, message } from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
+import {injectIntl} from 'react-intl';
 
 function AddExam(props) {
     if (props.add_exam_info === 1) {
@@ -29,7 +30,7 @@ function AddExam(props) {
     const { RangePicker, MonthPicker } = DatePicker;
     return (
         <div className={styles.AddExam}>
-            <h2>添加考试</h2>
+            <h2>{props.intl.formatMessage({id: 'router.ExamManage.addexam'})}</h2>
             <div className={styles.addexam_cont}>
                 <Form onSubmit={handleSubmit} className="login-form">
                     <div>
@@ -153,4 +154,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-export default connect(mapToProps, mapDispatchToProps)(Form.create()(AddExam));
+export default injectIntl(connect(mapToProps, mapDispatchToProps)(Form.create()(AddExam)));

@@ -1,7 +1,8 @@
 import React, { useEffect,useState } from 'react';
 import { connect } from 'dva';
 import style from './ClassroomManage.scss'
-import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, Spin, message, Select } from 'antd';
+import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, message, Select } from 'antd';
+import {injectIntl} from 'react-intl';
 
 function ClassroomManage(props) {
     const { Column, ColumnGroup } = Table;
@@ -30,10 +31,6 @@ function ClassroomManage(props) {
             }
         });
     };
-    //删除教室
-    // let delclassroom=(text)=>{
-    //     console.log(text)
-    // }
     function showConfirm(data) {
         confirm({
           title: '删除',
@@ -47,9 +44,8 @@ function ClassroomManage(props) {
     }
     return (
         <div className={style.question_box}>
-            {props.global ? <div className={style.loading}><Spin /></div> : null}
             <header className={style.question_header}>
-                <h2>教室管理</h2>
+                <h2>{props.intl.formatMessage({id: 'router.ClassManage.classroommanage'})}</h2>
             </header>
             <section className={style.question_main}>
                 <div className={style.question_main_Add}>
@@ -125,4 +121,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-export default connect(mapToProps, mapDispatchToProps)(Form.create()(ClassroomManage));
+export default injectIntl(connect(mapToProps, mapDispatchToProps)(Form.create()(ClassroomManage)));

@@ -2,6 +2,8 @@ import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import style from './ClassifyQuestions.scss'
 import { Button, Modal, Form, Input, Radio , Table, Divider, Tag , Spin, message} from 'antd';
+import {injectIntl} from 'react-intl';
+
 function ClassifyQuestion(props) {
   const { Column, ColumnGroup } = Table
   useEffect(() => {
@@ -43,7 +45,7 @@ function ClassifyQuestion(props) {
     <div className={style.question_box}>
       {props.global?<div className={style.loading}><Spin/></div>: null}
         <header className={style.question_header}>
-            <h2>试题分类</h2>
+            <h2>{props.intl.formatMessage({id: 'router.questions.type'})}</h2>
         </header>
         <section className={style.question_main}>
             <div className={style.question_main_Add}>
@@ -109,4 +111,4 @@ let mapDispatchProps = (dispatch) => {
       }
   }
 }
-export default connect(mapStateProps,mapDispatchProps)(Form.create()(ClassifyQuestion));
+export default injectIntl(connect(mapStateProps,mapDispatchProps)(Form.create()(ClassifyQuestion)));

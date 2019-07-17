@@ -8,11 +8,12 @@ import AddApiJurisdiction from './addApiJurisdiction'
 import AddAttempt from './addAttempt'
 import RankSetApi from './RankSetApi'
 import RankSetView from './RankSetView'
+import {injectIntl} from 'react-intl';
 function AddUser(props) {
     return (
         <div className={styles.AddUser_wrap}>
            <div className={styles.AddUser_title}>
-               <h2>添加用户</h2>
+               <h2>{props.intl.formatMessage({id: 'router.UserManage.adduser'})}</h2>
            </div>
            <div className={styles.AddUser_cont}>
                <div className={styles.AddUser_user}>
@@ -31,4 +32,4 @@ function AddUser(props) {
 AddUser.propTypes = {
 };
 
-export default connect()(Form.create()(AddUser));
+export default injectIntl(connect()(Form.create()(AddUser)));

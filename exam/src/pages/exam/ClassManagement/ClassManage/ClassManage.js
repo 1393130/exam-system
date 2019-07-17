@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import style from './ClassManage.scss'
 import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, Spin, message, Select } from 'antd';
+import {injectIntl} from 'react-intl';
 
 function ClassManage(props) {
     if (props.gradeInfo === 1) {
@@ -77,7 +78,7 @@ function ClassManage(props) {
         <div className={style.question_box}>
             {props.global ? <div className={style.loading}><Spin /></div> : null}
             <header className={style.question_header}>
-                <h2>班级管理</h2>
+                <h2>{props.intl.formatMessage({id: 'router.ClassManage.classmanage'})}</h2>
             </header>
             <section className={style.question_main}>
                 <div className={style.question_main_Add}>
@@ -241,4 +242,4 @@ const mapDispatchToProps = (dispatch) => {
 
     }
 }
-export default connect(mapToProps, mapDispatchToProps)(Form.create()(ClassManage));
+export default injectIntl(connect(mapToProps, mapDispatchToProps)(Form.create()(ClassManage)));
