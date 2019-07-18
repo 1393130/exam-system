@@ -52,7 +52,7 @@ function StudentManage(props) {
             },
           });
         
-    }
+    }  
     return (
         <div className={styles.StudentManage_wrap}>
             <h2>{props.intl.formatMessage({id: 'router.ClassManage.studentmanage'})}</h2>
@@ -64,7 +64,7 @@ function StudentManage(props) {
                             validateFirst: "onBlur",
                             rules: [
                             { required: true, message: 'Please input your username!' },
-                            { min: 6, max: 15, message: "6到15位组成" }
+                            { min: 3, max: 15, message: "6到15位组成" }
                             ],
                         })(
                             <Input
@@ -115,6 +115,7 @@ function StudentManage(props) {
             <div className={styles.ExamList_list_list}>
                     <Table dataSource={data}  rowKey="student_id"
                     pagination={pagination}
+                    style={{background:'#ffffff'}}
                     >
                         <Column title="姓名" dataIndex='student_name' rowKey="student_name" />
                         <Column title="学号" dataIndex="student_id" rowKey="student_id" />

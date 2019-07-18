@@ -26,7 +26,8 @@ import QuestionDetail from './detail/QuestionDetail'
 import editDetail from './detail/editDetail'
 //试卷列表详情
 import ExamListDetail from './detail/ExamListDetail'
-
+//批卷
+import BatchList from './MarkManagement/batchList'
 import MenuList from '../../components/Menu'
 
 const { SubMenu } = Menu;
@@ -97,6 +98,7 @@ function TestHome(props) {
                     <Route path="/home/QuestionDetail/:id" component={QuestionDetail}></Route>
                     <Route path="/home/editDetail/:id" component={editDetail}></Route>
                     <Route path="/home/ExamListDetail/:id" component={ExamListDetail}></Route>
+                    <Route path="/home/batchList" component={BatchList}></Route>
                 </div>
             </div>
         </div>

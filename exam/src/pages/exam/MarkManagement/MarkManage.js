@@ -13,29 +13,57 @@ function MarkManage(props) {
     useEffect(() => {
         props.TestList()
     },[])
+    //分页器
+    let pagination = {
+      defaultPageSize:6,
+      showQuickJumper:true,
+      showSizeChanger:true
+    }
+    const columns = [
+      {
+        title: '班级名',
+        dataIndex: 'grade_name',
+        key: 'grade_name',
+      },
+      {
+        title: '课程名称',
+        dataIndex: 'subject_text',
+        key: 'subject_text',
+      },
+      {
+        title: '阅卷状态',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: '课程名称',
+        dataIndex: 'subject_text',
+        key: 'subject_text1',
+      },
+      {
+        title: '成材率',
+        dataIndex: 'room_text',
+        key: 'room_text',
+      },
+      {
+        title: '操作',
+        key: 'action',
+        render: (text, record) => (
+          <span onClick={() => classmateBtn()}>
+              批卷
+          </span>
+        ),
+      },
+    ];
+    let classmateBtn = () => {
+       props.history.push('/home/batchList')
+    }
     return (
         <div className={styles.MarkManage_wrap}>
             <h2>{props.intl.formatMessage({id: 'router.MarkManage.markmanage'})}</h2>
             <div className={styles.StudentManage_cont}>
             <div className={styles.ExamList_list_list}>
-                    <Table dataSource={data}  rowKey="student_id"
-                    pagination={pagination}
-                    >
-                        <Column title="班级名" dataIndex='grade_name' rowKey="grade_name" />
-                        <Column title="课程名称" dataIndex="subject_text" rowKey="subject_text1" />
-                        <Column title="阅卷状态" dataIndex="" rowKey="" />
-                        <Column title="课程名称" dataIndex="subject_text" rowKey="room_id" />
-                        <Column title="成材率" dataIndex="room_text" rowKey="room_text" />
-                        <Column 
-                            title="操作"
-                            key="action"
-                            render={(text, record) => (
-                                <span>
-                                    批卷
-                                </span>
-                            )}
-                        />
-                    </Table>
+              <Table columns={columns} dataSource={data} rowKey='grade_id' pagination={pagination} />
                 </div>
             </div>
         </div>

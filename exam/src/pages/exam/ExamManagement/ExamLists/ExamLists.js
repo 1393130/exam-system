@@ -96,7 +96,7 @@ function ExamList(props) {
                     </Radio.Group>
                 </div>
                 <div className={styles.ExamList_list_list}>
-                    <Table dataSource={data} rowKey="exam_id">
+                    <Table dataSource={data} rowKey="exam_exam_id">
                         <Column title="试卷信息" dataIndex='title' rowKey="title" />
                         <Column title="班级" dataIndex="room_text" rowKey="room_text" />
                         <Column title="创建人" dataIndex="user_name" rowKey="user_name" />
