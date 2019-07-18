@@ -2,6 +2,8 @@ import { login } from "@/services/login"
 import { getUserInfo } from '@/services/getUserInfo'
 import { setToken, getToken } from '@/utils/index'
 import { routerRedux } from 'dva/router';
+import { upUserInfo } from "../services/upUserInfo"
+import {getUserInfoAgin} from '../services/getUserInfo'
 export default {
 
   namespace: 'login',
@@ -68,7 +70,27 @@ export default {
         type: 'updateUserInfo',
         payload: data.data
       })
-    }
+    },
+    //更新数据
+    *upUser({ payload }, { call, put }) {  // eslint-disable-line
+      let data = yield call(upUserInfo, payload)
+      // console.log(data)
+      if(data.code===1){
+        yield put({
+          type:'getUserInfoAgin'
+        })
+      }
+    },
+    *getUserInfoAgin({ payload }, { call, put }) {  // eslint-disable-line
+      let data = yield call(getUserInfo)
+      if (data.code === 0) {
+          return
+      }
+      yield put({
+          type: 'updateUserInfo',
+          payload: data.data
+      });
+  },
   },
 
 

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./TestHome.scss"
 import { connect } from 'dva';
-import { Menu, Icon, Dropdown, Select, Modal } from 'antd';
+import { Menu, Icon, Dropdown, Select, Modal,Button } from 'antd';
 import { Link, Route } from 'dva/router'
 import { injectIntl } from 'react-intl';
+import axios from 'axios';
 //试题管理
 import AddQuestion from './QuestionManagement/AddQuestions/AddQuestions'
 import ClassifyQuestion from './QuestionManagement/ClassifyQuestions/ClassifyQuestions'
@@ -39,7 +40,8 @@ const { Option } = Select;
 
 function TestHome(props) {
     const [visible, change_visible] = useState(false)
-    let { user_name } = props.login.userInfo
+    let { user_name,user_id,avatar } = props.login.userInfo
+    const [userImg,change_userImg]=useState('')
     let upload = () => {
         change_visible(true)
     }
@@ -69,13 +71,32 @@ function TestHome(props) {
             </Menu.Item>
         </Menu>
     );
-    let handleOk = e => {
+    let handleOk = e => {  
+        console.log(userImg)
+        if(userImg===""){
+            return 
+        }
+        props.updateUser({user_id:user_id,avatar:userImg})
         change_visible(false)
     };
 
     let handleCancel = e => {
         change_visible(false)
     };
+    let loadImg=(e)=>{
+        let reader=new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload=function(){
+            axios.post('http://123.206.55.50:11000/upload_base64',{base64:this.result}).then(res=>{
+                console.log(res)
+                if(res.data.code===1){
+                    console.log(res.data.data.path)
+                    change_userImg(res.data.data.path)
+                }
+            });
+        }        
+
+    }
     return (
         <div className={styles.testHome}>
             <div className={styles.testHome_top}>
@@ -88,7 +109,7 @@ function TestHome(props) {
                     </Select>
                     <Dropdown overlay={menu}>
                         <a className="ant-dropdown-link" href="#">
-                            <em><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=829044612,3699393036&fm=27&gp=0.jpg" /></em><span>{user_name}</span>
+                            <em>{avatar?<img src={avatar} />:<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=829044612,3699393036&fm=27&gp=0.jpg" />}</em><span>{user_name}</span>
                         </a>
                     </Dropdown>
                 </div>
@@ -98,8 +119,10 @@ function TestHome(props) {
                     onOk={handleOk}
                     onCancel={handleCancel}
                 >
-                    <p><input type='file'/></p>
-                    
+                    <Button style={{zIndex:1}}>
+                        <Icon type="upload"></Icon>上传头像
+                        <input type='file' onChange={(e)=>{loadImg(e)}} style={{width:60,height:40,opacity:0,zIndex:2}}/>
+                    </Button>
                 </Modal>
             </div>
             <div className={styles.testHome_bottom}>
@@ -133,14 +156,22 @@ TestHome.propTypes = {
 };
 const mapToProps = state => {
     return {
-        ...state
+        ...state,...state.login
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
+        //国际化
         changeLocale: payload => {
             dispatch({
                 type: 'global/updateLocale',
+                payload
+            })
+        },
+        //更新用户数据
+        updateUser:payload=>{
+            dispatch({
+                type:'login/upUser',
                 payload
             })
         }

@@ -34,6 +34,7 @@ app.model(require('./models/AddExam').default);//添加考试
 app.model(require('./models/ClassManage').default);//班级管理
 app.model(require('./models/global').default);//国际化配置
 app.model(require('./models/MarkManage').default);//获取学生试卷列表
+app.model(require('./models/upUserInfo').default);//更新用户数据
 
 
 // 4. Router
