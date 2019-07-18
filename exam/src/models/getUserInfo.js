@@ -21,6 +21,7 @@ export default {
                 payload: data.data
             });
         },
+        
     },
 
     reducers: {
