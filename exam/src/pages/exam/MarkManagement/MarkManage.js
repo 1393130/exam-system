@@ -63,7 +63,7 @@ function MarkManage(props) {
             <h2>{props.intl.formatMessage({id: 'router.MarkManage.markmanage'})}</h2>
             <div className={styles.StudentManage_cont}>
             <div className={styles.ExamList_list_list}>
-              <Table columns={columns} dataSource={data} rowKey='grade_id' pagination={pagination} />
+              <Table columns={columns} dataSource={data} rowKey='grade_id' pagination={pagination} style={{background:'#ffffff'}}/>
                 </div>
             </div>
         </div>

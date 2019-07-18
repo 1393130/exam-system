@@ -1,8 +1,8 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import style from './ClassroomManage.scss'
 import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, message, Select } from 'antd';
-import {injectIntl} from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 function ClassroomManage(props) {
     const { Column, ColumnGroup } = Table;
@@ -12,8 +12,8 @@ function ClassroomManage(props) {
     useEffect(() => {
         props.getRoom()//获取所有教室
     }, [])
-     //点击添加教室的按钮
-     let showModal = () => {
+    //点击添加教室的按钮
+    let showModal = () => {
         changeVisible(true);
     };
     //改变的弹框的显示隐藏
@@ -33,24 +33,24 @@ function ClassroomManage(props) {
     };
     function showConfirm(data) {
         confirm({
-          title: '删除',
-          content: '确定删除吗？',
-          onOk() {
-            props.delClassroom({room_id:data.room_id})
-          },
-          onCancel() {
-          },
+            title: '删除',
+            content: '确定删除吗？',
+            onOk() {
+                props.delClassroom({ room_id: data.room_id })
+            },
+            onCancel() {
+            },
         });
     }
     return (
         <div className={style.question_box}>
             <header className={style.question_header}>
-                <h2>{props.intl.formatMessage({id: 'router.ClassManage.classroommanage'})}</h2>
+                <h2>{props.intl.formatMessage({ id: 'router.ClassManage.classroommanage' })}</h2>
             </header>
             <section className={style.question_main}>
                 <div className={style.question_main_Add}>
                     <div>
-                        <Button type="primary" onClick={()=>{showModal()}} style={{ width: 200, height: 50, background: '#446DFF', fontSize: 18 }} >
+                        <Button type="primary" onClick={() => { showModal() }} style={{ width: 200, height: 50, background: '#446DFF', fontSize: 18 }} >
                             + 添加教室
                         </Button>
                         <Modal
@@ -81,7 +81,7 @@ function ClassroomManage(props) {
                             key="action"
                             render={(text, record) => (
                                 <span>
-                                    <a href="javascript:;" onClick={() => {showConfirm(text)}}>删除</a>
+                                    <a href="javascript:;" onClick={() => { showConfirm(text) }}>删除</a>
                                 </span>
                             )}
                         />
@@ -106,16 +106,16 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         //添加教室
-        addClassroom:payload=>{
+        addClassroom: payload => {
             dispatch({
-                type:'ClassManage/addClassroom',
+                type: 'ClassManage/addClassroom',
                 payload
             })
         },
         //删除教室
-        delClassroom:payload=>{
+        delClassroom: payload => {
             dispatch({
-                type:'ClassManage/delClassroom',
+                type: 'ClassManage/delClassroom',
                 payload
             })
         }

@@ -3,12 +3,9 @@ import { connect } from 'dva';
 import styles from './AddExam.scss'
 import { Form, Input, Button, Select, InputNumber, DatePicker, message } from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
-import {injectIntl} from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 function AddExam(props) {
-    if (props.add_exam_info === 1) {
-        message.success("创建试卷成功")
-    }
     const { getFieldDecorator } = props.form;
     useEffect(() => {
         props.getExamType()//获取考试类型
@@ -22,7 +19,9 @@ function AddExam(props) {
                 values.start_time = +values.start_time;
                 values.end_time = +values.end_time
                 values.number = values.number * 1
-                props.addExam(values)
+                console.log(values)
+                // props.addExam(values)
+                props.history.push({ pathname: '/home/creatExam', params: values })
             }
         });
     };
@@ -30,7 +29,7 @@ function AddExam(props) {
     const { RangePicker, MonthPicker } = DatePicker;
     return (
         <div className={styles.AddExam}>
-            <h2>{props.intl.formatMessage({id: 'router.ExamManage.addexam'})}</h2>
+            <h2>{props.intl.formatMessage({ id: 'router.ExamManage.addexam' })}</h2>
             <div className={styles.addexam_cont}>
                 <Form onSubmit={handleSubmit} className="login-form">
                     <div>

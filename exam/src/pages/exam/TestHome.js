@@ -30,6 +30,9 @@ import ExamListDetail from './detail/ExamListDetail'
 import BatchList from './MarkManagement/batchList'
 import MenuList from '../../components/Menu'
 
+//创建试卷
+import Add_Exam from './ExamManagement/AddExam/Add_Exam'
+
 const { SubMenu } = Menu;
 
 const { Option } = Select;
@@ -99,6 +102,7 @@ function TestHome(props) {
                     <Route path="/home/editDetail/:id" component={editDetail}></Route>
                     <Route path="/home/ExamListDetail/:id" component={ExamListDetail}></Route>
                     <Route path="/home/batchList" component={BatchList}></Route>
+                    <Route path="/home/creatExam" component={Add_Exam}></Route>
                 </div>
             </div>
         </div>
