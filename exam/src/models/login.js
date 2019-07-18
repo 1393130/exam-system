@@ -61,9 +61,9 @@ export default {
       if (Object.keys(userInfo).length) {
         return;
       }
-      console.log('userInfo...', userInfo);
+      // console.log('userInfo...', userInfo);
       let data = yield getUserInfo();
-      console.log('data...', data);
+      // console.log('data...', data);
       yield put({
         type: 'updateUserInfo',
         payload: data.data
