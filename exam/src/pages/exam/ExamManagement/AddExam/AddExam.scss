@@ -59,6 +59,12 @@
                     display: flex;
                     justify-content: space-between;
                 }
+                pre{
+                    width: 100%;
+                    code{
+                        width: 100%;
+                    }
+                }
             }
         }
         button{

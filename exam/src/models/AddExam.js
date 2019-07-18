@@ -1,4 +1,4 @@
-import { addExam } from "../services/AddExam"
+import { addExam,upExam } from "../services/AddExam"
 export default {
 
     namespace: 'AddExam',
@@ -23,6 +23,11 @@ export default {
                 type: 'upadd_exam_info',
                 payload: data.data
             });
+        },
+        //更新试卷
+        *upExam({ payload }, { call, put }) {  // eslint-disable-line
+            let data = yield call(upExam,payload)
+            console.log(data)
         },
     },
 
