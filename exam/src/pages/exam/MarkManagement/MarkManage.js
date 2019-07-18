@@ -4,10 +4,8 @@ import {injectIntl} from 'react-intl';
 import styles from './MarkManage.scss';
 import { Tag, Button, Select, Form , Radio , Table ,Input , Icon , pagination , Modal , Divider} from 'antd';
 function MarkManage(props) {
-    console.log(props)
     //学生列表
     let {testList} = props.MarkManageList
-    console.log(testList)
     const { Column } = Table;
     let data = testList
     useEffect(() => {
