@@ -1,4 +1,5 @@
 import { login } from "@/services/login"
+import { getUserInfo } from '@/services/getUserInfo'
 import { setToken, getToken } from '@/utils/index'
 import { routerRedux } from 'dva/router';
 export default {
@@ -6,7 +7,8 @@ export default {
   namespace: 'login',
 
   state: {
-    isLogin: -1
+    isLogin: -1,//判断是否登录成功
+    userInfo: {},//用户信息
   },
 
   subscriptions: {
@@ -32,12 +34,17 @@ export default {
             }))
           }
         }
+        // 获取用户信息
+        dispatch({
+          type: 'getUserInfo'
+        })
       });
     },
   },
 
   //异步
   effects: {
+    //登录
     *login({ payload }, { call, put }) {
       let data = yield call(login, payload);
       if (data.code === 1) {
@@ -47,14 +54,32 @@ export default {
         type: 'upLogin',
         payload: data.code
       })
+    },
+    //获取用户信息
+    * getUserInfo(action, { call, put, select }) {
+      let userInfo = yield select(state => state.login.userInfo);
+      if (Object.keys(userInfo).length) {
+        return;
+      }
+      console.log('userInfo...', userInfo);
+      let data = yield getUserInfo();
+      console.log('data...', data);
+      yield put({
+        type: 'updateUserInfo',
+        payload: data.data
+      })
     }
   },
+
 
   //同步
   reducers: {
     upLogin(state, action) {
       return { ...state, isLogin: action.payload };
     },
+    updateUserInfo(state, action) {
+      return { ...state, userInfo: action.payload };
+    }
   },
 
 };

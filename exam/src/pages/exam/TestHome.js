@@ -38,7 +38,8 @@ const { SubMenu } = Menu;
 const { Option } = Select;
 
 function TestHome(props) {
-
+    console.log(props)
+    let {user_name}=props.login.userInfo
     //下拉
     const menu = (
         <Menu>
@@ -77,7 +78,7 @@ function TestHome(props) {
                     </Select>
                     <Dropdown overlay={menu}>
                         <a className="ant-dropdown-link" href="#">
-                            <em><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=829044612,3699393036&fm=27&gp=0.jpg" /></em><span>zhangxin</span>
+                            <em><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=829044612,3699393036&fm=27&gp=0.jpg" /></em><span>{user_name}</span>
                         </a>
                     </Dropdown>
                 </div>
@@ -111,6 +112,11 @@ function TestHome(props) {
 
 TestHome.propTypes = {
 };
+const mapToProps=state=>{
+    return {
+        ...state
+    }
+}
 const mapDispatchToProps = dispatch => {
     return {
         changeLocale: payload => {
@@ -122,4 +128,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default injectIntl(connect(null, mapDispatchToProps)(TestHome));
+export default injectIntl(connect(mapToProps, mapDispatchToProps)(TestHome));
