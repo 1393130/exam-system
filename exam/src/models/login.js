@@ -1,4 +1,4 @@
-import { login } from "@/services/login"
+import { login , getAuthority} from "@/services/login"
 import { getUserInfo } from '@/services/getUserInfo'
 import { setToken, getToken } from '@/utils/index'
 import { routerRedux } from 'dva/router';
@@ -11,6 +11,8 @@ export default {
   state: {
     isLogin: -1,//判断是否登录成功
     userInfo: {},//用户信息
+    myView:[],
+    forbiddenView:[]
   },
 
   subscriptions: {
@@ -37,9 +39,11 @@ export default {
           }
         }
         // 获取用户信息
-        dispatch({
-          type: 'getUserInfo'
-        })
+        if(getToken()) {
+          dispatch({
+            type: 'getUserInfo'
+          })
+        }
       });
     },
   },
@@ -63,18 +67,23 @@ export default {
       if (Object.keys(userInfo).length) {
         return;
       }
-      // console.log('userInfo...', userInfo);
+      //获取用户信息
       let data = yield getUserInfo();
-      // console.log('data...', data);
       yield put({
         type: 'updateUserInfo',
         payload: data.data
       })
+      //获取用户权限
+      let authority = yield getAuthority()
+      console.log('authority...',authority)
+      // yield put({
+      //   type:'upgetAuthority',
+      //   payload:authority.data
+      // })
     },
     //更新数据
     *upUser({ payload }, { call, put }) {  // eslint-disable-line
       let data = yield call(upUserInfo, payload)
-      // console.log(data)
       if(data.code===1){
         yield put({
           type:'getUserInfoAgin'
@@ -90,7 +99,7 @@ export default {
           type: 'updateUserInfo',
           payload: data.data
       });
-  },
+    },
   },
 
 
@@ -101,7 +110,14 @@ export default {
     },
     updateUserInfo(state, action) {
       return { ...state, userInfo: action.payload };
+    },
+    upgetAuthority(state,action) {
+      let myView = [], forbiddenView = [];
+      // allAuthority.routes.forEach(item => {
+      //    item.children.forEach(value => {
+
+      //    })
+      // })
     }
   },
-
 };

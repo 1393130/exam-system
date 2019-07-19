@@ -6,14 +6,12 @@ import { injectIntl } from 'react-intl';
 const { SubMenu } = Menu;
 
 const MenuList = props => {
-    // console.log('menu props...', props);
     return (
         <Menu
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             mode="inline"
             theme="dark"
-        // inlineCollapsed={this.state.collapsed}
         >
             <SubMenu
                 key="sub1"

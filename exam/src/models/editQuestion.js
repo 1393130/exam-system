@@ -11,7 +11,7 @@ export default {
         setup({ dispatch, history }) {  // eslint-disable-line
         },
     },
-
+    //异步
     effects: {
         *editQuestion({ payload }, { call, put }) {  // eslint-disable-line
             // console.log(payload);
