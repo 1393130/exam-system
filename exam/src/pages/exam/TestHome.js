@@ -73,7 +73,6 @@ function TestHome(props) {
         </Menu>
     );
     let handleOk = e => {  
-        console.log(userImg)
         if(userImg===""){
             return 
         }
@@ -89,9 +88,9 @@ function TestHome(props) {
         reader.readAsDataURL(e.target.files[0]);
         reader.onload=function(){
             axios.post('http://123.206.55.50:11000/upload_base64',{base64:this.result}).then(res=>{
-                console.log(res)
+                // console.log(res)
                 if(res.data.code===1){
-                    console.log(res.data.data.path)
+                    // console.log(res.data.data.path)
                     change_userImg(res.data.data.path)
                 }
             });
@@ -110,19 +109,19 @@ function TestHome(props) {
                     </Select>
                     <Dropdown overlay={menu}>
                         <a className="ant-dropdown-link" href="#">
-                            <em>{avatar?<img src={avatar} />:<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=829044612,3699393036&fm=27&gp=0.jpg" />}</em><span>{user_name}</span>
+                            <em>{avatar?<img src={avatar} />:<img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4246834486,3428281355&fm=117&gp=0.jpg" />}</em><span>{user_name}</span>
                         </a>
                     </Dropdown>
                 </div>
                 <Modal
-                    title="Basic Modal"
+                    title="更新个人信息"
                     visible={visible}
                     onOk={handleOk}
                     onCancel={handleCancel}
                 >
-                    <Button style={{zIndex:1}}>
+                    <Button style={{zIndex:1,width:120,height:40,position:"relative"}}>
                         <Icon type="upload"></Icon>上传头像
-                        <input type='file' onChange={(e)=>{loadImg(e)}} style={{width:60,height:40,opacity:0,zIndex:2}}/>
+                        <input type='file' onChange={(e)=>{loadImg(e)}} style={{width:'100%',height:'100%',opacity:0,zIndex:2,position:"absolute",top:0,left:0}}/>
                     </Button>
                 </Modal>
             </div>
