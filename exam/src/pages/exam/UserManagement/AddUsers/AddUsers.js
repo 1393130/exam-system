@@ -1,4 +1,4 @@
-import React , {useState,useEffect} from 'react';
+import React  from 'react';
 import { connect } from 'dva';
 import styles from './AddUsers.scss'
 import { Form } from 'antd';

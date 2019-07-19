@@ -40,6 +40,16 @@
             line-height: 40px;
             h4{
                 font-size: 25px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                span{
+                    display: inline-block;
+                    width: 100px;
+                }
+                p{
+                    flex:1;
+                }
             }
             p{
                 font-family: 'Courier New', Courier, monospace

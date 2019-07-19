@@ -5,7 +5,7 @@ import styles from './editDetail.scss'
 import { Form, Input, Select, Button, Modal, message } from 'antd';
 
 function editDetail(props) {
-  if (props.editQuest == 1) {
+  if (props.editQuest === 1) {
     message.success('修改成功')
   }
   useEffect(() => {
@@ -15,7 +15,6 @@ function editDetail(props) {
     props.getUserInfo()//获取用户信息
     props.getCheckQuestion({ 'questions_id': props.match.params.id.slice(1).split('=')[1] })//获取试题信息
   }, [])
-  let { title, user_name, questions_type_text, subject_text, exam_name, questions_stem, questions_answer } = props.filterQuestion[0]
   //控制弹框
   const [visible, change_visible] = useState(false);
   let showModal = () => {

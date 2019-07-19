@@ -16,7 +16,7 @@ export default {
       *getclassify({ payload }, { call, put }) {  // eslint-disable-line
         //获取到的数据
         let data = yield call(getClassify,payload)
-        console.log(data)
+        // console.log(data)
         if(data.code === 1) {
           yield put({
             type:"upClassify",

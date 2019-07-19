@@ -1,8 +1,8 @@
-import React , {useState,useEffect}from 'react';
+import React , {useEffect}from 'react';
 import { connect } from 'dva';
 import {injectIntl} from 'react-intl';
 import styles from './batchList.scss';
-import { Tag, Button, Select, Form , Radio , Table ,Input , Icon , pagination , Modal , Divider} from 'antd';
+import { Button, Select, Form  , Table  , pagination } from 'antd';
 import moment from 'moment'
 moment.locale('zh-cn')
 function batchList(props) {
@@ -10,7 +10,6 @@ function batchList(props) {
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
-    const { Column, ColumnGroup } = Table
     // //分页器
     // let pagination = {
     //   defaultPageSize:6,

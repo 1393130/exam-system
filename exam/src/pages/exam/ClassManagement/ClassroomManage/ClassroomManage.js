@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import style from './ClassroomManage.scss'
-import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, message, Select } from 'antd';
+import { Button, Modal, Form, Input, Table } from 'antd';
 import { injectIntl } from 'react-intl';
 
 function ClassroomManage(props) {
-    const { Column, ColumnGroup } = Table;
+    const { Column } = Table;
     const { getFieldDecorator } = props.form;
-    const { Option } = Select;
     const { confirm } = Modal;
     useEffect(() => {
         props.getRoom()//获取所有教室
@@ -81,7 +80,7 @@ function ClassroomManage(props) {
                             key="action"
                             render={(text, record) => (
                                 <span>
-                                    <a href="javascript:;" onClick={() => { showConfirm(text) }}>删除</a>
+                                    <span style={{color:'#1892ff'}} onClick={() => { showConfirm(text) }}>删除</span>
                                 </span>
                             )}
                         />

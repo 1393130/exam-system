@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './AddUsers.scss'
-import { Form, Icon, Input, Button, Checkbox, message, Select, Radio } from 'antd';
+import { Form, Button , Select, Radio } from 'antd';
 function addAttempt(props) {
     useEffect(() => {
         props.getView_authority()

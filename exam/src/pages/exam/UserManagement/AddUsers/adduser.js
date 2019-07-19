@@ -8,10 +8,6 @@ function AddUser(props) {
     }
     //表单验证
     const {getFieldDecorator} = props.form;
-    //切换
-    function callback(key) {
-      console.log(key);
-    }
     //点击切换换内容
     let [flag , changeBtn] = useState('user')
     let handleBtnChange = (e) => {

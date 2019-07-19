@@ -1,11 +1,11 @@
 import React , {useState,useEffect} from 'react';
 import { connect } from 'dva';
 import style from './ClassifyQuestions.scss'
-import { Button, Modal, Form, Input, Radio , Table, Divider, Tag , Spin, message} from 'antd';
+import { Button, Modal, Form, Input , Table, Spin, message} from 'antd';
 import {injectIntl} from 'react-intl';
 
 function ClassifyQuestion(props) {
-  const { Column, ColumnGroup } = Table
+  const { Column } = Table
   useEffect(() => {
      props.getClassify()
   },[])
@@ -14,9 +14,6 @@ function ClassifyQuestion(props) {
   let {list} = props.getclassify
   //改变的弹框的显示隐藏
   const [visible,changeVisible]= useState(false);
-  const [confirmLoading,changeConfir]= useState(false);
-  //设置默认onchange的值
-  const [onValue , onChangeValue] = useState('')
   //点击添加类型的按钮
   let showModal = () => {
     changeVisible(true);

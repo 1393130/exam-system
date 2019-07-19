@@ -1,6 +1,6 @@
-import React , { useState, useEffect}from 'react';
+import React , {useEffect}from 'react';
 import { connect } from 'dva';
-import { Tag, Button, Select , Form } from 'antd';
+import { Form } from 'antd';
 import styles from './QuestionDetail.scss'
 function QuestionDetail(props) {
     useEffect(() => {

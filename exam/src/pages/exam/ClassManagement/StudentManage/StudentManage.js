@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './StudentManage.scss'
 import { injectIntl } from 'react-intl';
-import { Tag, Button, Select, Form, Radio, Table, Input, Icon, pagination, Modal, Divider } from 'antd';
+import { Button, Select, Form, Table, Input, Icon, Modal } from 'antd';
 function StudentManage(props) {
     //已经分班的
     let { classes } = props.Student

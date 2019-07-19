@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './UserDisplay.scss'
-import { Button, Radio, Icon, Table, Divider, Tag } from 'antd';
+import { Radio, Table } from 'antd';
 import {injectIntl} from 'react-intl';
 
 function UserDisplay(props) {
-    const { Column, ColumnGroup } = Table;
+    const { Column } = Table;
     const userClassify = [
         {
             tit: "用户数据",

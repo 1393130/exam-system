@@ -1,12 +1,11 @@
-import React , {useState,useEffect}from 'react';
+import React , { useEffect }from 'react';
 import { connect } from 'dva';
 import {injectIntl} from 'react-intl';
 import styles from './MarkManage.scss';
-import { Tag, Button, Select, Form , Radio , Table ,Input , Icon , pagination , Modal , Divider} from 'antd';
+import { Form , Table } from 'antd';
 function MarkManage(props) {
     //学生列表
     let {testList} = props.MarkManageList
-    const { Column } = Table;
     let data = testList
     useEffect(() => {
         props.TestList()

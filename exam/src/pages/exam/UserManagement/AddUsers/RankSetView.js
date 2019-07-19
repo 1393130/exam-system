@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './AddUsers.scss'
-import { Form, Icon, Input, Button, Checkbox, message, Select, Radio } from 'antd';
+import { Form,  Button, message, Select, Radio } from 'antd';
 function RankSetView(props) {
     if (props.setIdentityViewInfo.code === 1) {
         message.success(props.setIdentityViewInfo.code.msg)

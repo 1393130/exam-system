@@ -1,14 +1,10 @@
-import React , {useState,useEffect} from 'react';
+import React , {useEffect} from 'react';
 import { connect } from 'dva';
 import styles from './AddUsers.scss'
-import { Form, Icon, Input, Button, Checkbox, message , Select , Radio} from 'antd';
+import { Form, Icon, Input, Button, message , Radio} from 'antd';
 function addRank(props) {
     //表单验证
     const {getFieldDecorator} = props.form;
-    //切换
-    function callback(key) {
-      console.log(key);
-    }
     //处理表单提交
     let handleSubmit = () => {
         props.form.validateFields((err, values) => {

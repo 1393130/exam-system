@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './AddUsers.scss'
-import { Form, Icon, Input, Button, Checkbox, message, Select, Radio } from 'antd';
+import { Form, Button, message, Select, Radio } from 'antd';
 function addAttempt(props) {
     if (props.setIdentityApiInfo.code === 1) {
         message.success(props.setIdentityApiInfo.code.msg)

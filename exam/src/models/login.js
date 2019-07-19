@@ -1,9 +1,10 @@
-import { login , getAuthority} from "@/services/login"
+import { login, ViewAuthority } from "@/services/login"
 import { getUserInfo } from '@/services/getUserInfo'
 import { setToken, getToken } from '@/utils/index'
 import { routerRedux } from 'dva/router';
 import { upUserInfo } from "../services/upUserInfo"
-import {getUserInfoAgin} from '../services/getUserInfo'
+import { getUserInfoAgin } from '../services/getUserInfo'// eslint-disable-line
+import allAuthority from '../router/config'
 export default {
 
   namespace: 'login',
@@ -11,10 +12,11 @@ export default {
   state: {
     isLogin: -1,//判断是否登录成功
     userInfo: {},//用户信息
-    myView:[],
-    forbiddenView:[]
+    forbiddenView: [],
+    myView: [],
   },
 
+  // 订阅
   subscriptions: {
     setup({ dispatch, history }) {  // eslint-disable-line
       return history.listen(({ pathname }) => {
@@ -38,8 +40,9 @@ export default {
             }))
           }
         }
+
         // 获取用户信息
-        if(getToken()) {
+        if (getToken()) {
           dispatch({
             type: 'getUserInfo'
           })
@@ -67,6 +70,7 @@ export default {
       if (Object.keys(userInfo).length) {
         return;
       }
+      // console.log('userInfo...', userInfo);
       //获取用户信息
       let data = yield getUserInfo();
       yield put({
@@ -74,30 +78,31 @@ export default {
         payload: data.data
       })
       //获取用户权限
-      let authority = yield getAuthority()
-      console.log('authority...',authority)
-      // yield put({
-      //   type:'upgetAuthority',
-      //   payload:authority.data
-      // })
+      let authority = yield ViewAuthority();
+      // console.log('authority...', authority);
+      yield put({
+        type: 'updateViewAuthority',
+        payload: authority.data
+      })
     },
     //更新数据
     *upUser({ payload }, { call, put }) {  // eslint-disable-line
       let data = yield call(upUserInfo, payload)
-      if(data.code===1){
+      // console.log(data)
+      if (data.code === 1) {
         yield put({
-          type:'getUserInfoAgin'
+          type: 'getUserInfoAgin'
         })
       }
     },
     *getUserInfoAgin({ payload }, { call, put }) {  // eslint-disable-line
       let data = yield call(getUserInfo)
       if (data.code === 0) {
-          return
+        return
       }
       yield put({
-          type: 'updateUserInfo',
-          payload: data.data
+        type: 'updateUserInfo',
+        payload: data.data
       });
     },
   },
@@ -111,13 +116,23 @@ export default {
     updateUserInfo(state, action) {
       return { ...state, userInfo: action.payload };
     },
-    upgetAuthority(state,action) {
+    updateViewAuthority(state, action) {
       let myView = [], forbiddenView = [];
-      // allAuthority.routes.forEach(item => {
-      //    item.children.forEach(value => {
-
-      //    })
-      // })
+      allAuthority.routes.forEach(item => {
+        let obj = {
+          name: item.name,
+          children: []
+        }
+        item.children.forEach(value => {
+          if (action.payload.findIndex(item => item.view_id === value.view_id) !== -1) {
+            obj.children.push(value);
+          } else {
+            forbiddenView.push(value);
+          }
+        })
+        myView.push(obj)
+      })
+      return { ...state, myView, forbiddenView }
     }
   },
 };

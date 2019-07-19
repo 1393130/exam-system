@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './ExamList.scss'
-import { Tag, Button, Select, Form, Radio, Table, Divider } from 'antd';
+import { Button, Select, Form, Radio, Table, Divider } from 'antd';
 import moment from 'moment'
 import { injectIntl } from 'react-intl';
 moment.locale('zh-cn')
@@ -10,7 +10,7 @@ function ExamList(props) {
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
-    const { Column, ColumnGroup } = Table
+    const { Column } = Table
     //点击
     let [flag, changeBtn] = useState('all')
     let handleBtnChange = (e) => {
@@ -123,7 +123,7 @@ function ExamList(props) {
                             key="action"
                             render={(text, record) => (
                                 <span onClick={() => { ToQuestionDetail(text.exam_exam_id) }}>
-                                    <a href="javascript:;">详情</a>
+                                    <span style={{color:'#1892ff'}}>详情</span>
                                     <Divider type="详情" />
                                 </span>
                             )}
@@ -161,7 +161,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         //试卷列表
         EaxminAtions: (payload) => {
-            console.log(payload)
+            // console.log(payload)
             dispatch({
                 type: 'Examination/EaxminAtions',
                 payload

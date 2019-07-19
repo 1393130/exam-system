@@ -18,7 +18,7 @@ export default {
     //分班的学生
         *StudentList({ payload }, { call, put }) {  // eslint-disable-line
             let data = yield call(StudentManage, payload)
-            console.log(data)
+            // console.log(data)
             if (data.code === 0) {
                 return
             }
@@ -30,7 +30,7 @@ export default {
     //没有分班的学生
         *StudentWithoutClasses({ payload }, { call, put }) { 
             let data = yield call(WithoutClasses, payload)
-            console.log(data)
+            // console.log(data)
             if (data.code === 0) {
                 return
             }
@@ -42,7 +42,7 @@ export default {
          //删除学生
          *ScholasticDelete({ payload }, { call, put }) { 
             let data = yield call(StudentDelete, payload)
-            console.log(data)
+            // console.log(data)
             if (data.code === 0) {
                 return
             }
@@ -58,7 +58,7 @@ export default {
     reducers: {
         //分班
         upStudent(state, action) {
-            console.log(state.StudentWithoutList)
+            // console.log(state.StudentWithoutList)
             return { ...state,classes:action.payload};
         },
         //没分班

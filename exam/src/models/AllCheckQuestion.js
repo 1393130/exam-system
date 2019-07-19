@@ -12,7 +12,7 @@ export default {
         *AllCheckQuestion({ payload }, { call, put }) {  // eslint-disable-line
             // console.log(payload);
             let data = yield call(AllCheckQuestion,payload)
-            console.log(data)
+            // console.log(data)
             if (data.code === 0) {
                 return
             }
@@ -23,7 +23,7 @@ export default {
         },
         *getCheckQuestion({ payload }, { call, put }) {  // eslint-disable-line
             let data = yield call(getCheckQuestion,payload)
-            console.log(data)
+            // console.log(data)
             if (data.code === 0) {
                 return
             }

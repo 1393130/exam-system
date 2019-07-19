@@ -6,7 +6,7 @@ import { Form, Input, Select, Button, Modal,message } from 'antd';
 import {injectIntl} from 'react-intl';
 
 function AddQuestion(props) {
-  if(props.addInfo==1){
+  if(props.addInfo===1){
     message.success('添加成功')
   }
   useEffect(() => {
@@ -138,7 +138,7 @@ function AddQuestion(props) {
           {/* <Button type="primary" size="large" htmlType="submit">
             提交
         </Button> */}
-          <Button type="primary" onClick={showModal} type="primary" size="large">
+          <Button type="primary" onClick={showModal} size="large">
             提示
         </Button>
           <Modal

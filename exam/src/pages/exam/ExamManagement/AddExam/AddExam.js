@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import styles from './AddExam.scss'
-import { Form, Input, Button, Select, InputNumber, DatePicker, message } from 'antd';
+import { Form, Input, Button, Select, InputNumber, DatePicker } from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 import { injectIntl } from 'react-intl';
 
@@ -19,14 +19,13 @@ function AddExam(props) {
                 values.start_time = +values.start_time;
                 values.end_time = +values.end_time
                 values.number = values.number * 1
-                console.log(values)
+                // console.log(values)
                 // props.addExam(values)
                 props.history.push({ pathname: '/home/creatExam', params: values })
             }
         });
     };
     const { Option } = Select;
-    const { RangePicker, MonthPicker } = DatePicker;
     return (
         <div className={styles.AddExam}>
             <h2>{props.intl.formatMessage({ id: 'router.ExamManage.addexam' })}</h2>

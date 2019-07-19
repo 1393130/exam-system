@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import style from './ClassManage.scss'
-import { Button, Modal, Form, Input, Radio, Table, Divider, Tag, message, Select } from 'antd';
+import { Button, Modal, Form, Input, Table, Divider, message, Select } from 'antd';
 import { injectIntl } from 'react-intl';
 
 function ClassManage(props) {
@@ -15,14 +15,11 @@ function ClassManage(props) {
             message.success("创建班级成功")
         }
     }, [props.gradeInfo])
-    const { Column, ColumnGroup } = Table;
+    const { Column } = Table;
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
     //改变的弹框的显示隐藏
     const [visible, changeVisible] = useState(false);
-    const [confirmLoading, changeConfir] = useState(false);
-    //设置默认onchange的值
-    const [onValue, onChangeValue] = useState('')
     //设置编辑值
     const [edit_flag, change_edit_flag] = useState(false)
     //默认编辑值
@@ -181,9 +178,9 @@ function ClassManage(props) {
                             key="action"
                             render={(text, record) => (
                                 <span>
-                                    <a href="javascript:;" onClick={() => { edit_action(text) }}>编辑</a>
+                                    <span style={{color:'#1892ff'}}  onClick={() => { edit_action(text) }}>编辑</span>
                                     <Divider type="vertical" />
-                                    <a href="javascript:;" onClick={() => { delete_action(text) }}>删除</a>
+                                    <span style={{color:'#1892ff'}} onClick={() => { delete_action(text) }}>删除</span>
                                 </span>
                             )}
                         />
