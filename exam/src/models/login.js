@@ -79,7 +79,7 @@ export default {
       })
       //获取用户权限
       let authority = yield ViewAuthority();
-      // console.log('authority...', authority);
+      console.log('authority...', authority);
       yield put({
         type: 'updateViewAuthority',
         payload: authority.data
@@ -117,6 +117,7 @@ export default {
       return { ...state, userInfo: action.payload };
     },
     updateViewAuthority(state, action) {
+      //分配出我拥有的权限
       let myView = [], forbiddenView = [];
       allAuthority.routes.forEach(item => {
         let obj = {

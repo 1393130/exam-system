@@ -3,9 +3,11 @@ import { connect } from 'dva';
 import styles from './AddUsers.scss'
 import { Form, Icon, Input, Button, message , Select , Radio} from 'antd';
 function AddUser(props) {
-    if(props.update_User === 1) {
-        message.success('更新成功')
-    }
+    useEffect(() => {
+        if(props.update_User === 1) {
+            message.success('更新成功')
+        }
+    },[props.update_User])
     //表单验证
     const {getFieldDecorator} = props.form;
     //点击切换换内容
@@ -16,12 +18,13 @@ function AddUser(props) {
       //处理表单提交
     let handleSubmit = () => {
         props.form.validateFields((err, values) => {
+            console.log(values)
         if (!err) {
             if(flag === 'user') {
-                props.AddUser({user_name:values.username,user_pwd:values.password})
+                props.AddUser({user_name:values.username,user_pwd:values.password,identity_id:values.identity_id})
             } else if(flag === 'update') {
                 console.log(values.user_id)
-                props.UpdateUser({user_id:values.user_id,user_name:values.username,user_pwd:values.password})
+                props.UpdateUser({user_id:values.user_id,user_name:values.username,user_pwd:values.password,identity_id:values.identity_id})
             }
         }
      });
@@ -90,7 +93,7 @@ function AddUser(props) {
                         )}
                     </Form.Item>
                     <Form.Item>
-                    {getFieldDecorator('questions_type_id', {
+                    {getFieldDecorator('identity_id', {
                             initialValue: "请选择身份ID"
                         })(
                             <Select style={{ width: 200 }}>
