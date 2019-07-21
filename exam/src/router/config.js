@@ -14,7 +14,18 @@ import ClassroomManage from '../pages/exam/ClassManagement/ClassroomManage/Class
 import StudentManage from '../pages/exam/ClassManagement/StudentManage/StudentManage'
 //阅卷管理
 import MarkManage from '../pages/exam/MarkManagement/MarkManage'
-
+//查看试题的详情
+import QuestionDetail from '@/pages/exam/detail/QuestionDetail'
+//编辑试题详情
+import editDetail from '@/pages/exam/detail/editDetail'
+//创建试卷
+import Add_Exam from '@/pages/exam/ExamManagement/AddExam/Add_Exam'
+//试卷详情
+import ExamListDetail from '../pages/exam/detail/ExamListDetail'
+//批卷
+import BatchList from '../pages/exam/MarkManagement/batchList'
+//学生批卷详情
+import BatchDetail from '../pages/exam/detail/BatchDetail'
 export default{
     routes:[
         {
@@ -36,6 +47,18 @@ export default{
                     path:'/home/checkquestion',
                     view_id:'main-watchQuestions',
                     component:CheckQuestion
+                },{
+                    name:'questions.view.detail',
+                    path:'/home/QuestionDetail/:id',
+                    view_id:'main-questionsDetail',
+                    component:QuestionDetail,
+                    flag:false
+                },{
+                    name:'questions.view.edit',
+                    path:'/home/editDetail/:id',
+                    view_id:'main-editQuestions',
+                    component:editDetail,
+                    flag:false
                 }
             ]
         },{
@@ -68,6 +91,18 @@ export default{
                     path:'/home/examlist',
                     view_id:'main-examList',
                     component:ExamList
+                },{
+                    name:"ExamManage.addexam.examEdit",
+                    path:'/home/creatExam',
+                    view_id:'main-examEdit',
+                    component:Add_Exam,
+                    flag:false
+                },{
+                    name:"ExamManage.addexam.examEditDetail",
+                    path:'/home/ExamListDetail/:id',
+                    view_id:'main-examDetail',
+                    component:ExamListDetail,
+                    flag:false
                 }
             ]
         },{
@@ -100,6 +135,18 @@ export default{
                     path:"/home/markmanage",
                     view_id:'main-examinationPapers',
                     component:MarkManage
+                },{
+                    name:'MarkManage.markmanage.ClassList',
+                    path:"/home/batchList",
+                    view_id:'main-examPaperClassList',
+                    component:BatchList,
+                    flag:false
+                },{
+                    name:'MarkManage.markmanage.ClassListMate',
+                    path:"/home/BatchDetail",
+                    view_id:'main-examPaperClassmate',
+                    component:BatchDetail,
+                    flag:false
                 }
             ]
         }

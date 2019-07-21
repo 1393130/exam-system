@@ -68,6 +68,7 @@ function MarkManage(props) {
 }
 
 MarkManage.propTypes = {
+  
 };
 let mapStateProps = (state) => {
     return { 

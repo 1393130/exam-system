@@ -29,9 +29,9 @@ const MenuList = props => {
                         }
                     >{
                             item.children.map(value => {
-                                return <Menu.Item key={value.name}>
+                                return value.flag !==false ? <Menu.Item key={value.name}>
                                     <NavLink to={value.path}>{props.intl.formatMessage({ id: value.name })}</NavLink>
-                                </Menu.Item>
+                                </Menu.Item>: null
                             })
                         }</SubMenu>
                 })

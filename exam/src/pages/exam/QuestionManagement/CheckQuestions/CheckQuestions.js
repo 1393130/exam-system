@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import styles from './CheckQuestions.scss';
 import { Tag, Button, Select, Form } from 'antd';
-// import List from "./list"
+import List from "./list"
 import {injectIntl} from 'react-intl';
 import ListItem from './listitem'
 
@@ -120,8 +120,8 @@ function CheckQuestion(props) {
           </div>
           <div className={styles.cont_quest}>
             {
-              // props.arr&&props.arr.map((item,index)=>(<List listItem={item} key={index} {...props}></List>))
-              props.arr&&props.arr.map((item,index)=>(<ListItem list={item} key={index} {...props}></ListItem>))
+              props.arr&&props.arr.map((item,index)=>(<List listItem={item} key={index} {...props}></List>))
+              // props.arr&&props.arr.map((item,index)=>(<ListItem list={item} key={index} {...props}></ListItem>))
             }
           </div>
         </Form>

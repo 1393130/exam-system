@@ -118,7 +118,7 @@ function TestHome(props) {
                 </div>
                 <div className={styles.testHome_bottom_right}>
                     <Switch>
-                        <Redirect from="/home" exact to="/home/addQuestions" />
+                        <Redirect from="/home" exact to="/home/addquestion" />
                         {/* 配置用户拥有的路由 */}
                         {
                             props.myView.map(item => {
