@@ -4,16 +4,14 @@ import styles from './CheckQuestions.scss'
 
 function listItem(props) {
     let { title, questions_type_text, subject_text, exam_name, user_name, questions_id } = props.list;
-    //点击跳考试详情
-    // let ToQuestionDetail = (item) => {
-    //     console.log(item,props)
-    //     // props.history.push({ pathname: `/home/QuestionDetail/?id=${item}` })
-    // }
-    // //点击跳转编辑页
-    // let CompileDetail = (item) => {
-    //     console.log(item)
-    //     props.history.push({ pathname: `/home/editDetail/?id=${item}` })
-    // }
+    let add = () => {
+        let ArrData=JSON.parse(window.localStorage.getItem('exam'))
+        let flag = ArrData.findIndex(item => item.questions_id === questions_id);
+        if (flag === -1) {
+            ArrData.push({ title, questions_id })
+            window.localStorage.setItem('exam', JSON.stringify(ArrData));
+        }
+    }
     return (
         <div className={styles.list_item} key={questions_id}>
             <div className={styles.item_left}>
@@ -28,10 +26,10 @@ function listItem(props) {
                 </div>
             </div>
             <ul className={styles.item_right}>
-                <li onClick={() => {  }}>
+                <li onClick={() => { add() }}>
                     <span>添加</span>
                 </li>
-                <li onClick={() => {  }}>
+                <li onClick={() => { }}>
                     <span>详情</span>
                 </li>
             </ul>

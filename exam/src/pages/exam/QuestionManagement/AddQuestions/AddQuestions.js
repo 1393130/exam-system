@@ -6,9 +6,11 @@ import { Form, Input, Select, Button, Modal,message } from 'antd';
 import {injectIntl} from 'react-intl';
 
 function AddQuestion(props) {
-  if(props.addInfo===1){
-    message.success('添加成功')
-  }
+  useEffect(()=>{
+    if(props.addInfo===1){
+      message.success('添加成功')
+    }
+  },[props.addInfo])
   useEffect(() => {
     props.getExamType()//获取考试类型
     props.getSubject()//获取课程类型
