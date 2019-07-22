@@ -4,7 +4,7 @@ import styles from './CheckQuestions.scss';
 import { Tag, Button, Select, Form } from 'antd';
 import List from "./list"
 import {injectIntl} from 'react-intl';
-import ListItem from './listitem'
+// import ListItem from './listitem'
 
 
 function CheckQuestion(props) {
