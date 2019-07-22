@@ -6,20 +6,20 @@ import {  Route, Switch, Redirect } from 'dva/router'
 import { injectIntl } from 'react-intl';
 import axios from 'axios';
 //查看试题详情
-import QuestionDetail from './detail/QuestionDetail'
+// import QuestionDetail from './detail/QuestionDetail'
 //编辑详情
-import editDetail from './detail/editDetail'
+// import editDetail from './detail/editDetail'
 //试卷列表详情
-import ExamListDetail from './detail/ExamListDetail'
+// import ExamListDetail from './detail/ExamListDetail'
 //批卷
-import BatchList from './MarkManagement/batchList'
+// import BatchList from './MarkManagement/batchList'
 
 import MenuList from '../../components/Menu'
 
 //创建试卷
-import Add_Exam from './ExamManagement/AddExam/Add_Exam'
+// import Add_Exam from './ExamManagement/AddExam/Add_Exam'
 //学生批卷详情
-import BatchDetail from './detail/BatchDetail'
+// import BatchDetail from './detail/BatchDetail'
 
 const { Option } = Select;
 
@@ -150,12 +150,12 @@ function TestHome(props) {
                     <Route path="/home/studentmanage" component={StudentManage}></Route>
                     <Route path="/home/markmanage" component={MarkManage}></Route> */}
 
-                    <Route path="/home/QuestionDetail/:id" component={QuestionDetail}></Route>
+                    {/* <Route path="/home/QuestionDetail/:id" component={QuestionDetail}></Route>
                     <Route path="/home/editDetail/:id" component={editDetail}></Route>
                     <Route path="/home/ExamListDetail/:id" component={ExamListDetail}></Route>
                     <Route path="/home/batchList" component={BatchList}></Route>
                     <Route path="/home/creatExam" component={Add_Exam}></Route>
-                    <Route path="/home/BatchDetail" component={BatchDetail}></Route>
+                    <Route path="/home/BatchDetail" component={BatchDetail}></Route> */}
                 </div>
             </div>
         </div>
