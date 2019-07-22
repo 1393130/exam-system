@@ -46,14 +46,15 @@ function MarkManage(props) {
         title: '操作',
         key: 'action',
         render: (text, record) => (
-          <span onClick={() => classmateBtn()}>
+          <span onClick={() => classmateBtn(text)}>
               批卷
           </span>
         ),
       },
     ];
-    let classmateBtn = () => {
-       props.history.push('/home/batchList')
+    let classmateBtn = (text) => {
+      let {grade_id} = text
+       props.history.push(`/home/batchList/?id=${grade_id}`)
     }
     return (
         <div className={styles.MarkManage_wrap}>

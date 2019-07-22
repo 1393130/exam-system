@@ -6,7 +6,8 @@ import { Button, Select, Form  , Table  , pagination } from 'antd';
 import moment from 'moment'
 moment.locale('zh-cn')
 function batchList(props) {
-    let {allList} = props.MarkManageList
+    console.log(props)
+    let {detail} = props.MarkManageList
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;
@@ -17,7 +18,7 @@ function batchList(props) {
     //   showSizeChanger:true
     // }
     useEffect(() => {
-        props.allBatchList()
+        props.BatchDetail({'grade_id':props.location.search.slice(1).split('=')[1]})
     },[])
     // //处理表单提交
     let handleSubmit = () => {
@@ -78,7 +79,7 @@ function batchList(props) {
           ),
         },
       ];
-      let data = allList
+      let data = detail
       let BatchDetail = (text) => {
           props.history.push(`/home/BatchDetail/${text.exam_student_id}`)
       }
@@ -139,15 +140,17 @@ batchList.propTypes = {
 let mapStateProps = (state) => {
     return { 
       ...state,
-      ...state.allBatchList
+      ...state.BatchDetail
     }
   }
   let mapDispatchProps = (dispatch) => {
     return {
          //学生列表
-         allBatchList:() => {
+         BatchDetail:(payload) => {
+           console.log(payload)
            dispatch({
-             type:'MarkManageList/allBatchList'
+             type:'MarkManageList/BatchDetail',
+             payload
         })
      }
     }

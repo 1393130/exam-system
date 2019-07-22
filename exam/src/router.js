@@ -38,7 +38,7 @@ let RouterView = connect(mapStateToProps)((props)=>{
             <Redirect from="/" exact to="/home"/>
               <Route path="/home" component={TestHome} />
               <Route path="/login" component={LoginPage} />
-              <Route path="/403" render={() => <div style={{background:'#ccc'}}>403</div>} />
+              <Route path="/403" render={() => <div>403</div>} />
               <Route path="/404" render={() => <div>404</div>} />
           </Switch>
         </Router>

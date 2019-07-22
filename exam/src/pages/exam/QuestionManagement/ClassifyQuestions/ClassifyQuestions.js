@@ -85,7 +85,9 @@ function ClassifyQuestion(props) {
 ClassifyQuestion.propTypes = {
 };
 let mapStateProps = (state) => {
-  return {...state,
+  console.log(state)
+  return {
+    ...state,
     ...state.ClassifyQuestions,
     global: state.loading.global
   }
