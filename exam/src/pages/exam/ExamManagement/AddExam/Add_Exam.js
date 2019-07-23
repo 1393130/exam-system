@@ -17,10 +17,12 @@ function Add_Exam(props) {
   const [visible, change_visible] = useState(false)
   let showDrawer = () => {
     change_visible(true)
+    window.localStorage.setItem('flag','true')
   };
 
   let onClose = () => {
     change_visible(false) 
+    window.localStorage.setItem('flag','false')
   };
   let del = (id) => {
     let arr = JSON.parse(localStorage.getItem('exam'))
@@ -40,7 +42,7 @@ function Add_Exam(props) {
         </div>
         <ul className={styles.cont_list}>
           {
-            ArrData.length !== 0 ? ArrData.map((item, index) => {
+           ArrData && ArrData.length !== 0 ? ArrData.map((item, index) => {
               return (
                 <li key={item.questions_id}>
                   <p><span>{index + 1}、{item.title}</span><em onClick={() => { del(item.questions_id) }}>删除</em></p>
