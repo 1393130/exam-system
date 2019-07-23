@@ -6,8 +6,8 @@ import { Button, Select, Form  , Table  , pagination } from 'antd';
 import moment from 'moment'
 moment.locale('zh-cn')
 function batchList(props) {
-    console.log(props)
-    let {detail} = props.MarkManageList
+  let {detail} = props.MarkManageList
+  console.log(detail)
     //从form中校验
     const { getFieldDecorator } = props.form;
     const { Option } = Select;

@@ -9,6 +9,6 @@ export function batchList() {
 }
 //学生试卷
 export function batchPaper(params) {
-    console.log(params)
+    console.log(params,"111111111")
     return request.get('/exam/student',params);
 }
