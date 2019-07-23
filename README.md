@@ -7,4 +7,9 @@
     <img src="./imgs/checkQuestions.png" />
     <img src="./imgs/userDisplay.png" />
     <img src="./imgs/addExam.png" />
+    <img src='./imgs/addExamDetail.png' />
+    <img src='./imgs/addClass.png' />
+    <img src='./imgs/editClass.png' />
+    <img src='./imgs/addClassroom.png' />
+    <img src='./imgs/delClassroom.png' />
 </figure>
