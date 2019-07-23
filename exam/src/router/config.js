@@ -1,31 +1,66 @@
+import dynamic from 'dva/dynamic';
 //试题管理
-import AddQuestion from '../pages/exam/QuestionManagement/AddQuestions/AddQuestions'
-import ClassifyQuestion from '../pages/exam/QuestionManagement/ClassifyQuestions/ClassifyQuestions'
-import CheckQuestion from '../pages/exam/QuestionManagement/CheckQuestions/CheckQuestions'
+const AddQuestion = dynamic({
+    component: () => import('../pages/exam/QuestionManagement/AddQuestions/AddQuestions'),
+});
+const ClassifyQuestion = dynamic({
+    component: () => import('../pages/exam/QuestionManagement/ClassifyQuestions/ClassifyQuestions'),
+});
+const CheckQuestion = dynamic({
+    component: () => import('../pages/exam/QuestionManagement/CheckQuestions/CheckQuestions'),
+});
 //用户管理
-import AddUser from '../pages/exam/UserManagement/AddUsers/AddUsers'
-import UserDisplay from '../pages/exam/UserManagement/UserDisplay/UserDisplay'
+const AddUser = dynamic({
+    component: () => import('../pages/exam/UserManagement/AddUsers/AddUsers'),
+});
+const UserDisplay = dynamic({
+    component: () => import('../pages/exam/UserManagement/UserDisplay/UserDisplay'),
+});
 //考试管理
-import AddExam from '../pages/exam/ExamManagement/AddExam/AddExam'
-import ExamList from '../pages/exam/ExamManagement/ExamLists/ExamLists'
+const AddExam = dynamic({
+    component: () => import('../pages/exam/ExamManagement/AddExam/AddExam'),
+});
+const ExamList = dynamic({
+    component: () => import('../pages/exam/ExamManagement/ExamLists/ExamLists'),
+});
 //班级管理
-import ClassMange from '../pages/exam/ClassManagement/ClassManage/ClassManage'
-import ClassroomManage from '../pages/exam/ClassManagement/ClassroomManage/ClassroomManage'
-import StudentManage from '../pages/exam/ClassManagement/StudentManage/StudentManage'
+const ClassMange = dynamic({
+    component: () => import('../pages/exam/ClassManagement/ClassManage/ClassManage'),
+});
+const ClassroomManage = dynamic({
+    component: () => import('../pages/exam/ClassManagement/ClassroomManage/ClassroomManage'),
+});
+const StudentManage = dynamic({
+    component: () => import('../pages/exam/ClassManagement/StudentManage/StudentManage'),
+});
 //阅卷管理
-import MarkManage from '../pages/exam/MarkManagement/MarkManage'
+const MarkManage = dynamic({
+    component: () => import('../pages/exam/MarkManagement/MarkManage'),
+});
 //查看试题的详情
-import QuestionDetail from '@/pages/exam/detail/QuestionDetail'
+const QuestionDetail = dynamic({
+    component: () => import('@/pages/exam/detail/QuestionDetail'),
+});
 //编辑试题详情
-import editDetail from '@/pages/exam/detail/editDetail'
+const editDetail = dynamic({
+    component: () => import('@/pages/exam/detail/editDetail'),
+});
 //创建试卷
-import Add_Exam from '@/pages/exam/ExamManagement/AddExam/Add_Exam'
+const Add_Exam = dynamic({
+    component: () => import('@/pages/exam/ExamManagement/AddExam/Add_Exam'),
+});
 //试卷详情
-import ExamListDetail from '../pages/exam/detail/ExamListDetail'
+const BatchList = dynamic({
+    component: () => import('../pages/exam/detail/ExamListDetail'),
+});
 //批卷
-import BatchList from '../pages/exam/MarkManagement/batchList'
+const ExamListDetail = dynamic({
+    component: () => import('../pages/exam/MarkManagement/batchList'),
+});
 //学生批卷详情
-import BatchDetail from '../pages/exam/detail/BatchDetail'
+const BatchDetail = dynamic({
+    component: () => import('../pages/exam/detail/BatchDetail'),
+});
 export default{
     routes:[
         {
