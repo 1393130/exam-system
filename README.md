@@ -34,3 +34,17 @@
 > 1.根据考试的内容添加考试的题目,在添加考试的时候可以多个选择考试内容要求,根据不同的班级分发不同的考试内容,
 > 2.登录之后会在cookies面存储一个Token值 时限为2个小时
 > 3.根据分发试卷的时间到时间会自动提交,管理人员看见班级的人员试卷进行批卷
+考试系统管理
+应用技术 dva框架+redux.saga+Hooks
+
+<figure>
+    <img src="./imgs/addQuestions.png" />
+    <img src="./imgs/checkQuestions.png" />
+    <img src="./imgs/userDisplay.png" />
+    <img src="./imgs/addExam.png" />
+    <img src='./imgs/addExamDetail.png' />
+    <img src='./imgs/addClass.png' />
+    <img src='./imgs/editClass.png' />
+    <img src='./imgs/addClassroom.png' />
+    <img src='./imgs/delClassroom.png' />
+</figure>
