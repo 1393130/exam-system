@@ -20,8 +20,8 @@ function AddExam(props) {
                 values.end_time = +values.end_time
                 values.number = values.number * 1
                 // console.log(values)
-                // props.addExam(values)
-                props.history.push({ pathname: '/home/creatExam', params: values })
+                props.addExam(values)
+                props.history.push({ pathname: '/home/creatExam'})
             }
         });
     };
@@ -121,7 +121,7 @@ function AddExam(props) {
 AddExam.propTypes = {
 };
 const mapToProps = state => {
-    return { ...state, ...state.getExamType, ...state.getSubject, ...state.getTopicType, ...state.addExam }
+    return { ...state, ...state.getExamType, ...state.getSubject, ...state.getTopicType, ...state.AddExam }
 }
 const mapDispatchToProps = (dispatch) => {
     return {

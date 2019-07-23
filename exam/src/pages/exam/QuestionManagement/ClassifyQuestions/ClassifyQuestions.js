@@ -9,7 +9,6 @@ function ClassifyQuestion(props) {
   useEffect(() => {
      props.getClassify()
   },[])
-
   //获取的数据
   let {list} = props.getclassify
   //改变的弹框的显示隐藏
@@ -102,7 +101,6 @@ let mapDispatchProps = (dispatch) => {
       },
       //试题分类里面的添加类型试题 paylaod 传过来的是 text  sort
       AddClassify(payload) {
-        console.log(payload)
         dispatch({
           type:'AddClassify/AddClassify',
           payload
