@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import styles from './CheckQuestions.scss';
 import { Tag, Button, Select, Form } from 'antd';
 import List from "./list"
-import {injectIntl} from 'react-intl';
+import { injectIntl } from 'react-intl';
 import ListItem from './listitem'
 
 
@@ -55,10 +55,10 @@ function CheckQuestion(props) {
   const { getFieldDecorator } = props.form;
 
   const { Option } = Select;
-  let flag=window.localStorage.getItem('flag');
+  let flag = window.localStorage.getItem('flag');
   return (
     <div className={styles.checkquest}>
-      <h2>{props.intl.formatMessage({id: 'router.questions.view'})}</h2>
+      <h2>{props.intl.formatMessage({ id: 'router.questions.view' })}</h2>
       <section className={styles.checkquest_cont}>
         <Form onSubmit={handleSubmit}>
           <div className={styles.classify_quest}>
@@ -121,9 +121,9 @@ function CheckQuestion(props) {
           </div>
           <div className={styles.cont_quest}>
             {
-              flag==='true'?
-              props.arr&&props.arr.map((item,index)=>(<ListItem list={item} key={index} {...props}></ListItem>)):
-              props.arr&&props.arr.map((item,index)=>(<List listItem={item} key={index} {...props}></List>))
+              flag === 'true' ?
+                props.arr && props.arr.map((item, index) => (<ListItem list={item} key={index} {...props}></ListItem>)) :
+                props.arr && props.arr.map((item, index) => (<List listItem={item} key={index} {...props}></List>))
             }
           </div>
         </Form>

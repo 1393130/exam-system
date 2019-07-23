@@ -5,7 +5,7 @@ import styles from './CheckQuestions.scss'
 function listItem(props) {
     let { title, questions_type_text, subject_text, exam_name, user_name, questions_id } = props.list;
     let add = () => {
-        let ArrData=JSON.parse(window.localStorage.getItem('exam'))
+        let ArrData = JSON.parse(window.localStorage.getItem('exam'))
         let flag = ArrData.findIndex(item => item.questions_id === questions_id);
         if (flag === -1) {
             ArrData.push({ title, questions_id })

@@ -79,7 +79,7 @@ export default {
       })
       //获取用户权限
       let authority = yield ViewAuthority();
-      console.log('authority...', authority);
+      // console.log('authority...', authority);
       yield put({
         type: 'updateViewAuthority',
         payload: authority.data

@@ -3,7 +3,8 @@ import {getToken} from './index'
 import {message} from 'antd';
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://169.254.12.198:7001/',
+  baseURL: /jasonandjay.com/.test(window.location.host)?'https://exam.jasonandjay.com':'http://169.254.12.198:7001/',
+  //'http://169.254.12.198:7001/',
   // withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })

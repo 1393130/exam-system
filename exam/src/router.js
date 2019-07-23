@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Switch, Redirect } from 'dva/router';
 import LoginPage from './pages/login/loginPage';
 import TestHome from './pages/exam/TestHome'
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import {connect} from 'dva';
 // 引入国际化
 import {IntlProvider, addLocaleData} from 'react-intl';
